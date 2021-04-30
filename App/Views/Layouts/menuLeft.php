@@ -74,20 +74,23 @@ use System\Session\Session;
             </li>
         <?php endif; ?>
 
+<?php 
+$idPermissao = Session::get('idPerfil'); 
+if ($idPermissao == 1){ ?>
         <div class="dropdown">
             <li class="active-pro dropdown-toggle dropdown-toggle dropdown-toggle-split" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <a>
                     <i class="fas fa-cogs" style="color:#6e6e6d"></i>
-                    <p><p>Configurações</p></p>
+                    <p>Configurações</p>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="margin-left:50px">
-                    <a class="dropdown-item" href="#"><i class="fas fa-users" style="color:#212120"></i> Usuários</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-store" style="color:#212120"></i> Empresas</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-file-signature" style="color:#212120"></i> Logs de acessos</a>
+                    <a class="dropdown-item" href="<?php echo BASEURL; ?>/usuario"><i class="fas fa-users" style="color:#212120"></i> Usuários</a>
+                    <a class="dropdown-item" href="<?php echo BASEURL; ?>/empresa"><i class="fas fa-store" style="color:#212120"></i> Empresas</a>
+                    <a class="dropdown-item" href="<?php echo BASEURL; ?>/logs"><i class="fas fa-file-signature" style="color:#212120"></i> Logs de acessos</a>
                 </div>
             </li>
         </div><!--end dropdown-->
-
+<?php } ?>
     </ul>
 </div>
 <script>

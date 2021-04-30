@@ -31,7 +31,7 @@ System\Session\Session::start();
 
 System\Session\Token::verify();
 
-date_default_timezone_set(getenv('TIMEZONE', 'America/Bahia'));
+date_default_timezone_set(getenv('TIMEZONE'));
 
 use System\Route\GetRoute;
 use System\Route\SelectController;

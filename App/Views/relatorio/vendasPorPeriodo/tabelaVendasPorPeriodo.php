@@ -38,6 +38,8 @@
         <thead>
         <tr>
             <th>#</th>
+            <th>Vendedor</th>
+            <th>Produto</th>
             <!--<th>Preço</th>-->
             <th>Qtd</th>
             <th>Total</th>
@@ -48,7 +50,8 @@
         </thead>
         <tbody>
         <?php foreach ($vendas as $venda): ?>
-            <tr>
+        
+            <tr class="group-row">
                 <td>
                     <?php if (!is_null($venda->imagem) || $venda->imagem != ''): ?>
                         <img class="imagem-perfil" src="<?php echo BASEURL . '/' . $venda->imagem; ?>"
@@ -58,6 +61,8 @@
                         <i class="fas fa-user" style="font-size:30px"></i>
                     <?php endif; ?>
                 </td>
+                <td><?php echo $venda->nomeUsuario; ?></td>
+                <td><?php echo $venda->nomeProduto; ?></td>
 
                 <?php //if ($venda->preco != 0):?>
                 <!--<td>R$ <?php //echo number_format($venda->preco, 2,',','.');?></td>-->

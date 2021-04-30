@@ -1,4 +1,7 @@
-<?php use System\HtmlComponents\Charts\Doughnut; ?>
+<?php 
+use System\HtmlComponents\Charts\Doughnut;
+use System\Session\Session;
+?>
 
 <style>
     .imagem-perfil {
@@ -10,6 +13,9 @@
     }
 </style>
 
+<?php
+$idPermissao = Session::get('idPerfil'); 
+if ($idPermissao != 4){ ?>
 <div class="row">
 
     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -318,7 +324,7 @@
 
 
 
-
+<?php } ?>
 
 </div>
 <script src="<?php echo BASEURL; ?>/public/assets/js/core/jquery.min.js"></script>

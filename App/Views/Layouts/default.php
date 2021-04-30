@@ -24,7 +24,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
     <?php if (getenv('APPLICATION_NAME')): ?>
         <title><?php echo getenv('APPLICATION_NAME'); ?></title>
     <?php else: ?>
-        <title>ZigMoney</title>
+        <title>DTECH</title>
     <?php endif; ?>
 
 
@@ -46,7 +46,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
 
     <link rel="stylesheet" type="text/css" href="<?php echo BASEURL; ?>/public/css/select2.css">
 
-    <meta name="author" content="ZigMoney">
+    <meta name="author" content="DTECH">
     <meta property="og:url" content="https://github.com/valdiney/zig/">
 
     <?php if (getenv('APPLICATION_NAME')): ?>
@@ -54,8 +54,8 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
         <meta property="og:title" content="<?php echo getenv('APPLICATION_NAME'); ?>">
         <meta property="og:site_name" content="<?php echo getenv('APPLICATION_NAME'); ?>">
     <?php else: ?>
-        <meta property="og:title" content="ZigMoney">
-        <meta property="og:site_name" content="ZigMoney>
+        <meta property="og:title" content="DTECH">
+        <meta property="og:site_name" content="DTECH>
     <?php endif; ?>
 
     <meta property="og:description" content="Tentativa de criar um Chat simples usando Firebase">

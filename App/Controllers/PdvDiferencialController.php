@@ -70,14 +70,15 @@ class PdvDiferencialController extends Controller
             $dataCompensacao = null;
 
             // só adiciona caso seja um boleto
-            if ($meioDePagamento == 4) {
-                $dataCompensacao = $this->post->data()->data_compensacao;
-            }
+            // if ($meioDePagamento == 4) {
+            //     $dataCompensacao = $this->post->data()->data_compensacao;
+            // }
 
             $dados = [
                 'id_usuario' => $this->idUsuario,
                 'id_meio_pagamento' => $meioDePagamento,
-                'data_compensacao' => $dataCompensacao,
+                // 'data_compensacao' => $dataCompensacao,
+                'data_compensacao' => '1970-01-01',
                 'id_empresa' => $this->idEmpresa,
                 'id_produto' => $produto['id'],
                 'preco' => $produto['preco'],

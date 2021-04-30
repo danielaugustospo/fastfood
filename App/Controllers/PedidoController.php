@@ -64,11 +64,16 @@ class PedidoController extends Controller
         $situacaoPedido = new SituacaoPedido();
         $situacoesPedidos = $situacaoPedido->all();
 
+        $clienteEndereco = new ClienteEndereco();
+        $clienteEnderecos = $clienteEndereco->all();
+
+
         $this->view('pedido/index', $this->layout,
             compact(
                 'clientes',
                 'dates',
-                'situacoesPedidos'
+                'situacoesPedidos',
+                'clienteEnderecos'
             )
         );
     }
@@ -87,19 +92,21 @@ class PedidoController extends Controller
             $ativos = $ativos === "on";
 
             $situacaoPedido = $this->post->data()->situacao_pedido ?? "";
+            $clienteEndereco = $this->post->data()->id_cliente_endereco ?? "";
 
             $date = [
                 "tipo" => $this->post->data()->data_tipo ?? "",
                 "de" => $this->post->data()->de ?? date("Y-m-d"),
                 "ate" => $this->post->data()->ate ?? date("Y-m-d"),
             ];
-
-            $pedidos = $pedido->pedidos($this->idUsuarioLogado, $idCliente, $ativos, $situacaoPedido, $date);
+            $pedidos = $pedido->pedidos($this->idUsuarioLogado, $idCliente, $ativos, $situacaoPedido, $clienteEndereco, $date);
         }
 
         if (!empty($pedidos)) {
             $pedidos = $this->formataDataDeCompensacao($pedidos);
         }
+        $clienteEndereco = new ClienteEndereco();
+        $listaEndereco = $clienteEndereco->all();
 
         $situacaoPedido = new SituacaoPedido();
         $situacoesPedidos = $situacaoPedido->all();
@@ -107,7 +114,8 @@ class PedidoController extends Controller
         $this->view('pedido/tabelaDePedidos', null,
             compact(
                 'pedidos',
-                'situacoesPedidos'
+                'situacoesPedidos',
+                'listaEndereco'
             )
         );
     }
@@ -124,7 +132,7 @@ class PedidoController extends Controller
 
             $dadosPedido['id_vendedor'] = $this->idUsuarioLogado;
             $dadosPedido['id_situacao_pedido'] = 7; # 7: Incompleto
-            $dadosPedido['previsao_entrega'] = '0000-00-00';
+            $dadosPedido['previsao_entrega'] = '1970-01-01';
             $dadosPedido['total'] = '0';
 
             try {
