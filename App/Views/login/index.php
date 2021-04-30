@@ -2,7 +2,9 @@
 <?php
 
 use System\HtmlComponents\FlashMessage\FlashMessage; ?>
-
+<head>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+</head>
 <div class="col-md-12">
     <?php FlashMessage::show(); ?>
 </div>
@@ -37,7 +39,11 @@ use System\HtmlComponents\FlashMessage\FlashMessage; ?>
 
     <hr class="my-4">
 
-
-    <center style="font-size:13px;opacity:0.70">DTECH <span style="font-size:17px">&hearts;</span></center>
+    <i class="fa fa-wrench" aria-hidden="true" style="color:red;"></i>
+    <!-- <center style="font-size:13px;opacity:0.70">danieltecnologia.com 
+        <span style="font-size:17px">
+            <i class="fa fa-wrench" aria-hidden="true" style="color:red;"></i>
+        </span>
+    </center> -->
 
 </form>

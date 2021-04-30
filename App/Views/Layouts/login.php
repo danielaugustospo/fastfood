@@ -21,10 +21,12 @@
     <link rel="stylesheet" type="text/css" href="<?php echo BASEURL; ?>/public/css/login.css">
     <style type="text/css">
         body {
-            background-image: url('public/img/fundo_login.jpg');
+            /* background-image: url('public/img/fundo_login.jpg'); */
+            background-image: url('<?php echo BASEURL; ?>/public/img/background.png');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: top center;
+            opacity: 1.6;
         }
     </style>
 </head>
