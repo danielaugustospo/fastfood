@@ -28,25 +28,32 @@ class Usuario extends Model
         # Se o perfil do Usuário logado não for (superAdmin), não traz Usuários com perfil (superAdmin)
         $queryCondicional = false;
         if ($idPerfilUsuarioLogado && $idPerfilUsuarioLogado != $superAdmin) {
-            $queryCondicional = " AND usuarios.id_perfil NOT IN({$superAdmin})";
+            $queryCondicional = "WHERE usuarios.id_empresa = {$idEmpresa}  AND usuarios.id_perfil NOT IN({$superAdmin})";
         }
 
         # Se o perfil do Usuário logado for de vendedor, mostra apenas os dados do proprio Usuário
         if ($idPerfilUsuarioLogado && $idPerfilUsuarioLogado == $vendedor) {
-            $queryCondicional = " AND usuarios.id = {$idUsuarioLogado}";
+            $queryCondicional = "WHERE usuarios.id_empresa = {$idEmpresa}  AND usuarios.id = {$idUsuarioLogado}";
+        }
+
+        if ($idPerfilUsuarioLogado && $idPerfilUsuarioLogado == $superAdmin) {
+            $queryCondicional = false;
         }
 
         return $this->query(
             "SELECT
-      usuarios.id AS id, usuarios.nome,
-      usuarios.email, usuarios.id_sexo,
-      usuarios.created_at, usuarios.imagem,
-      sexos.descricao, perfis.descricao AS perfil
-
-      FROM usuarios INNER JOIN sexos ON
-  		usuarios.id_sexo = sexos.id
-      INNER JOIN perfis ON usuarios.id_perfil = perfis.id
-      WHERE usuarios.id_empresa = {$idEmpresa} {$queryCondicional}"
+            usuarios.id AS id, usuarios.nome,
+            empresas.nome as empresa,
+            usuarios.email, usuarios.id_sexo,
+            usuarios.created_at, usuarios.imagem,
+            sexos.descricao, perfis.descricao AS perfil
+            
+      
+            FROM usuarios INNER JOIN sexos ON
+                usuarios.id_sexo = sexos.id
+            INNER JOIN perfis ON usuarios.id_perfil = perfis.id
+            INNER JOIN empresas ON usuarios.id_empresa = empresas.id
+      {$queryCondicional}"
         );
     }
 

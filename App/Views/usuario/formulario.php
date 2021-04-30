@@ -11,7 +11,30 @@
             <input type="hidden" name="id" value="<?php echo $usuario->id; ?>">
         <?php endif; ?>
 
-        <input type="hidden" name="id_empresa" value="<?php echo Session::get('idEmpresa'); ?>">
+        <?php 
+        $idPermissao = Session::get('idPerfil'); 
+        if ($idPermissao == 1){ ?>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="password">Empresa *</label>
+                <select class="form-control" name="id_empresa" id="id_empresa">
+                    <option>Selecione...</option>
+                    <?php foreach ($empresas as $empresa) : ?>
+                        <?php if (isset($usuario->id) && $usuario->id_empresa == $empresa->id) : ?>
+                            <option value="<?php echo $empresa->id; ?>"
+                                    selected="selected"><?php echo $empresa->nome; ?>
+                            </option>
+                        <?php else : ?>
+                            <option value="<?php echo $empresa->id; ?>"><?php echo $empresa->nome; ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <?php } else { ?>
+            <input type="hidden" name="id_empresa" value="<?php echo Session::get('idEmpresa'); ?>">
+        <?php } ?>
 
         <div class="col-md-4">
             <div class="form-group">

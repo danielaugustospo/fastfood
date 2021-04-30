@@ -3,6 +3,7 @@
 
 use System\HtmlComponents\FlashMessage\FlashMessage;
 use System\HtmlComponents\Modal\Modal;
+use System\Session\Session;
 
 ?>
 
@@ -44,6 +45,9 @@ use System\HtmlComponents\Modal\Modal;
                 <th>Nome</th>
                 <th>Ativo</th>
                 <th>R$ Preço</th>
+                <?php
+                    $idPermissao = Session::get('idPerfil');
+                    if ($idPermissao != 4) { ?>
                 <th style="text-align:right;padding-right:0">
                     <?php $rota = BASEURL . '/produto/modalFormulario'; ?>
                     <button onclick="modalFormularioProdutos('<?php echo $rota; ?>', false);"
@@ -51,6 +55,7 @@ use System\HtmlComponents\Modal\Modal;
                         <i class="fas fa-plus"></i>
                     </button>
                 </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody>
@@ -77,13 +82,17 @@ use System\HtmlComponents\Modal\Modal;
                     <?php endif;?>
 
                     <td><?php echo real($produto->preco); ?></td>
-
+                    <?php
+                            $idPermissao = Session::get('idPerfil');
+                            if ($idPermissao != 4) { ?>
                     <td style="text-align:right">
                         <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-secondary dropdown-toggle"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-cogs"></i>
                             </button>
+
+
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 
                                 <button class="dropdown-item" href="#"
@@ -98,6 +107,8 @@ use System\HtmlComponents\Modal\Modal;
                             </div>
                         </div>
                     </td>
+                    <?php } ?>
+
                 </tr>
             <?php endforeach; ?>
 

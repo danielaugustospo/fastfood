@@ -37,4 +37,13 @@ class Empresa extends Model
 
         return false;
     }
+
+    public function retornaEmpresas(){
+        $query = $this->query("SELECT id, nome, email FROM empresas");
+        if (count($query) > 0) {
+            return $query;
+        }
+
+        return false;
+    }
 }

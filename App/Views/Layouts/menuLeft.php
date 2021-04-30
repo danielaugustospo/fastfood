@@ -4,10 +4,8 @@ use App\Config\ConfigPerfil;
 use System\Session\Session;
 
 ?>
-
 <div class="sidebar-wrapper">
     <ul class="nav">
-
         <li class="">
             <a href="<?php echo BASEURL; ?>/home"
                class="<?php currentRouteFromMenu('home', 'inicioBorder'); ?>">
@@ -44,6 +42,7 @@ use System\Session\Session;
             </li>
         <?php endif; ?>
 
+        <?php if (Session::get('idPerfil') != ConfigPerfil::vendedor()): ?>
 
         <li class="">
             <a href="<?php echo BASEURL; ?>/cliente"
@@ -63,7 +62,6 @@ use System\Session\Session;
             </a>
         </li>
 
-        <?php if (Session::get('idPerfil') != ConfigPerfil::vendedor()): ?>
             <li class="">
                 <a href="<?php echo BASEURL; ?>/relatorio/vendasPorPeriodo"
                    class="<?php currentRouteFromMenu('relatorio', 'relatorioBorder'); ?>

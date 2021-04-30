@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Empresa;
 use App\Models\Perfil;
 use App\Models\Sexo;
 use App\Models\Usuario;
@@ -53,7 +54,7 @@ class UsuarioController extends Controller
             $this->idUsuarioLogado,
             $this->idPerfilUsuarioLogado
         );
-
+// var_dump($usuarios);
         $this->view('usuario/index', $this->layout, compact('usuarios'));
     }
 
@@ -176,11 +177,15 @@ class UsuarioController extends Controller
             );
         }
 
+        $empresa = new Empresa();
+        $empresas = $empresa->retornaEmpresas();
+
         $this->view('usuario/formulario', null,
             compact(
                 'sexos',
                 'usuario',
-                'perfis'
+                'perfis',
+                'empresas'
             ));
     }
 

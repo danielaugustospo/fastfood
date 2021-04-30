@@ -125,12 +125,12 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
         <div class="logo">
             <a href="http://www.creative-tim.com" class="simple-text logo-mini">
                 <div class="logo-image-small">
-
                 </div>
             </a>
+            <img src="<?php echo BASEURL; ?>/public/imagem/logo.png">
             <a href="<?php echo BASEURL; ?>/pdvDiferencial" class="simple-text logo-normal">
           <span style="color:#00cc66;">&nbsp;&nbsp;&nbsp;
-            <b style="opacity:0.70">TONIE</b>
+            <b style="opacity:0.70">PDV SIMPLES</b>
           </span>
                 <!--<span>Zig</span>
                 <span>Money</span>-->
@@ -209,7 +209,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
                                     </a>
                                 <?php endif; ?>
 
-                                <a class="dropdown-item" href="login/logout">
+                                <a class="dropdown-item" href="<?php echo BASEURL; ?>/login/logout">
                                     <i class="fas fa-sign-out-alt"></i> Sair do Sistema
                                 </a>
 

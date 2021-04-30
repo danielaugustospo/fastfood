@@ -34,6 +34,7 @@ use System\Session\Session;
                     <th>#</th>
                     <th>Nome</th>
                     <th class="hidden-when-mobile">E-mail</th>
+                    <th class="hidden-when-mobile">Empresa</th>
                     <th>Perfil</th>
                     <th style="text-align:right;padding-right:0">
                         <?php $rota = BASEURL . '/usuario/modalFormulario'; ?>
@@ -61,6 +62,7 @@ use System\Session\Session;
                         </td>
                         <td><?php echo $usuario->nome; ?></td>
                         <td class="hidden-when-mobile"><?php echo $usuario->email; ?></td>
+                        <td><?php echo $usuario->empresa; ?></td>
                         <td><?php echo $usuario->perfil; ?></td>
                         <td style="text-align:right">
 
