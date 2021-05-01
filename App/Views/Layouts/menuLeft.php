@@ -89,6 +89,15 @@ if ($idPermissao == 1){ ?>
             </li>
         </div><!--end dropdown-->
 <?php } ?>
+
+<li class="">
+            <a href="<?php echo BASEURL; ?>/login/logout"
+               >
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Sair</p>
+            </a>
+        </li>
+
     </ul>
 </div>
 <script>
