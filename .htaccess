@@ -11,5 +11,5 @@
 RewriteCond %{SERVER_PORT} 80
 
 #Definição da regra, neste caso, sempre utilizar o https:// mesmo quando acessado por http
-RewriteRule ^(.*)$ https://pdv.danieltecnologia.com [R,L]
+RewriteRule ^(.*)$ https://pdv.danieltecnologia.com/sistemas/producao/pdv/$i [R,L]
 </IfModule>
