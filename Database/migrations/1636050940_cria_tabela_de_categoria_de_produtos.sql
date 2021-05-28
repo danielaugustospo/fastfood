@@ -5,6 +5,6 @@ CREATE TABLE IF NOT EXISTS `categoria_produtos` (
   `id_empresa` int(255) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
