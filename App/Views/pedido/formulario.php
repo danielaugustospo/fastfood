@@ -247,6 +247,8 @@
         $.get(rota, function (data, status) {
             var enderecos = JSON.parse(data);
             var options = false;
+            console.log(rota);
+            console.log(data);
 
             if (enderecos.length != 0) {
                 $('#id_cliente_endereco').empty();
@@ -290,6 +292,7 @@
             '_token': '<?php echo TOKEN; ?>',
             'id_cliente': $("#id_cliente").val(),
             'id_cliente_endereco': $("#id_cliente_endereco").val(),
+            'id_mesa': $("#id_mesa").val(),
             'id_pedido': idPedido
 
         }, function (resultado) {
@@ -356,7 +359,7 @@
     function montaTabelaDeProdutos(produto) {
         var t = "";
         t += "<tr id='id-tr-" + produto.idProduto + "' data-produto-id=" + produto.idProduto + ">";
-        t += "<td>" + '<img class="img-produto-seleionado" src="' + getDomain() + '/' + produto.imagem + '">' + "</td>";
+        t += "<td>" + '<img class="img-produto-seleionado" src="' + getDomain() + '/public/' + produto.imagem + '">' + "</td>";
         t += "<td>" + produto.produto + "</td>";
         t += "<td>" + '<input type="number" class="campo-quantidade" value="' + produto.quantidade + '" id="campo-quantidade' + produto.idProdutoPedido + '" onchange="alterarAquantidadeDeUmProduto(' + produto.idProdutoPedido + ', $(this))">' + "</td>";
         t += "<td class='total-cada-produto' data-valor-produto=" + produto.total + " data-produto-id=" + produto.idProduto + ">" + real(produto.total) + "</td>";

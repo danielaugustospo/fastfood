@@ -20,6 +20,12 @@ class Produto extends Model
             "SELECT * FROM produtos WHERE id_empresa = {$idEmpresa} AND deleted_at IS NULL"
         );
     }
+    public function produtosPorCategoria($idEmpresa,$idCategoria)
+    {
+        return $this->query(
+            "SELECT * FROM produtos WHERE id_empresa = {$idEmpresa} AND id_categoria = {$idCategoria} AND deleted_at IS NULL"
+        );
+    }
 
     public function quantidadeDeProdutosCadastrados($idEmpresa)
     {

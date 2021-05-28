@@ -46,4 +46,12 @@ class Empresa extends Model
 
         return false;
     }
+    public function permissaoAcessoEmpresas($idEmpresa){
+        $query = $this->query("SELECT e.id, e.nome, e.email, e.plano_ativo, e.logo_empresa, pl.descricao FROM empresas e, planos pl WHERE e.plano_ativo = 1 and e.id = {$idEmpresa} and pl.id = e.id_planos");
+        if (count($query) > 0) {
+            return $query;
+        }
+
+        return false;
+    }
 }

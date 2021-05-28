@@ -61,8 +61,15 @@
             <div class="form-group">
                 <label for="previsao_entrega">Previsão de entrega</label>
                 <input type="date" class="form-control" name="previsao_entrega" id="previsao_entrega"
-                       value="<?php if (isset($pedido->id) && $pedido->previsao_entrega != null): ?><?php echo $pedido->previsao_entrega; ?><?php endif; ?>"
-                       onchange="somaTotalComFreteSomenteParaMostrarNaView($(this))">
+                       value="<?php 
+                       $data = date("Y-m-d");
+                       
+                       if (isset($pedido->id) && $pedido->previsao_entrega != null): 
+                                    echo $pedido->previsao_entrega; 
+                                    else: echo $data;
+                                    endif; 
+                                ?>"
+                       onchange="somaTotalComFreteSomenteParaMostrarNaView($(this))" />
             </div>
         </div>
     </div>

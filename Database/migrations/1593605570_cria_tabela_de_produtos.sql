@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `produtos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_empresa` int(11) NOT NULL,
+  `id_categoria` int(11) DEFAULT NULL,
   `nome` varchar(50) NOT NULL,
   `preco` double NOT NULL DEFAULT '0',
   `descricao` text,

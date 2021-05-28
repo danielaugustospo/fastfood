@@ -111,11 +111,93 @@
 <?php Modal::stop(); ?>
 
 <script>
-    function modalFormularioPedido(rota, id) {
+
+        $(function(){
+        $(document).on('click', '.fechaVenda', function(e) {
+            e.preventDefault;
+            var idPedido = $(this).closest('tr').find('td[data-idpedido]').data('idpedido');
+
+
+            var idvendedor = $(this).closest('tr').find('td[data-idvendedor]').data('idvendedor');
+            var formapagamento = $(this).closest('tr').find('td[data-idmeiopagamento]').data('idmeiopagamento');
+            var idempresa = $(this).closest('tr').find('td[data-idempresa]').data('idempresa');
+            var idproduto = $(this).closest('tr').find('td[data-idproduto]').data('idproduto');
+            var preco = $(this).closest('tr').find('td[data-preco]').data('preco');
+
+            var quantidade = $(this).closest('tr').find('td[data-quantidade]').data('quantidade');
+            var subtotal = $(this).closest('tr').find('td[data-subtotal]').data('subtotal');
+
+            var rota = getDomain() + "/pedido/fecharPedido";
+
+        modalValidacao('Finalizando', 'Aguarde...');
+
+        $.post(rota, {           
+            '_token': '<?php echo TOKEN; ?>',
+            'id_usuario'        : idvendedor,
+            'id_meio_pagamento' : formapagamento,
+            'id_empresa'        : idempresa,
+            'id_produto'        : idproduto,
+            'preco'             : preco,
+            'quantidade'        : quantidade,
+            'valor'             : subtotal,
+
+            'id_pedido'             : idPedido,
+        }, function (resultado) {
+            var retorno = JSON.stringify(resultado);
+            if (retorno.status == true) {
+                setTimeout(modalValidacaoClose, 800);
+            }
+            else {
+                setTimeout(modalValidacaoClose, 800);
+            }
+        })
+
+        pedidos();
+        return false;
+    });
+});
+        $(function(){
+        $(document).on('click', '.cancelaVenda', function(e) {
+            e.preventDefault;
+            var idPedido = $(this).closest('tr').find('td[data-idpedido]').data('idpedido');
+
+            var idvendedor = $(this).closest('tr').find('td[data-idvendedor]').data('idvendedor');
+            var idempresa = $(this).closest('tr').find('td[data-idempresa]').data('idempresa');
+            var idproduto = $(this).closest('tr').find('td[data-idproduto]').data('idproduto');
+
+            var rota = getDomain() + "/pedido/cancelarPedido";
+
+        modalValidacao('Finalizando', 'Aguarde...');
+
+        $.post(rota, {           
+            '_token': '<?php echo TOKEN; ?>',
+            'id_usuario'        : idvendedor,
+            'id_empresa'        : idempresa,
+            'id_produto'        : idproduto,
+
+            'id_pedido'             : idPedido,
+        }, function (resultado) {
+            var retorno = JSON.stringify(resultado);
+            if (retorno.status == true) {
+                setTimeout(modalValidacaoClose, 800);
+            }
+            else {
+                setTimeout(modalValidacaoClose, 800);
+            }
+        })
+
+        pedidos();
+        return false;
+    });
+});
+
+    function modalFormularioPedido(rota, id, mesa) {
         var url = "";
 
         if (id) {
             url = rota + "/" + id;
+        } else if (mesa){
+            url = rota + "/" + mesa;
         } else {
             url = rota;
         }
@@ -124,9 +206,7 @@
         $("#modalPedidos").modal({backdrop: 'static'});
         $("#formulario").load(url);
     }
-</script>
 
-<script>
     function alterarSituacaoPedido(idPedido, idSituacaoPedido) {
         var rota = getDomain() + "/pedido/alterarSituacaoPedido";
 
@@ -143,6 +223,7 @@
             }
         })
 
+        pedidos();
         return false;
     }
 

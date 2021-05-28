@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\LogAcesso;
+use App\Models\Empresa;
 use App\Models\Perfil;
 use App\Models\Usuario;
 use App\Rules\Logged;
@@ -44,6 +45,15 @@ class LoginController extends Controller
         $usuario = new Usuario();
         $dadosUsuario = $usuario->findBy('email', $email);
 
+        $empresa = new Empresa();
+        $dadosEmpresa = $empresa->permissaoAcessoEmpresas($dadosUsuario->id_empresa);
+
+        if ($dadosEmpresa == false){
+            Session::flash('error', 'Os dados de acesso desta empresa estão bloqueados. Contate o administrador');
+            return $this->get->redirectTo("login");
+        }
+        elseif ($dadosEmpresa[0]->plano_ativo == '1'){
+
         if ($usuario->userExist(['email' => $email, 'password' => $password])) {
             # Grava o Log de Acessos
             $log = new LogAcesso();
@@ -64,6 +74,8 @@ class LoginController extends Controller
             Session::set('idSexoUsuario', $dadosUsuario->id_sexo);
             Session::set('emailUsuario', $dadosUsuario->email);
             Session::set('imagem', $dadosUsuario->imagem);
+            Session::set('plano', $dadosEmpresa[0]->descricao);
+            Session::set('logoEmpresa', $dadosEmpresa[0]->logo_empresa);
 
             if ($mustRememberLogin) {
                 $this->handleRememberUser($dadosUsuario);
@@ -71,6 +83,8 @@ class LoginController extends Controller
 
             return $this->get->redirectTo("home");
         }
+    }
+
 
         Session::flash('error', 'Usuário não encontrado!');
         return $this->get->redirectTo("login");

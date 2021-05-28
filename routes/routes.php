@@ -42,6 +42,12 @@ $route->get('produto/modalFormulario/{idProduto?}', 'ProdutoController@modalForm
 $route->post('produto/save', 'ProdutoController@save');
 $route->post('produto/update', 'ProdutoController@update');
 
+# ----- CategoriaProdutoController --------------------------------
+$route->get('categoriaproduto', 'CategoriaProdutoController@index');
+$route->get('categoriaproduto/modalFormulario/{idCategoriaProduto?}', 'CategoriaProdutoController@modalFormulario');
+$route->post('categoriaproduto/save', 'CategoriaProdutoController@save');
+$route->post('categoriaproduto/update', 'CategoriaProdutoController@update');
+
 # ----- ConfiguracaoController --------------------------------
 $route->get('configuracao', 'ConfiguracaoController@index');
 $route->post('configuracao/alterarConfigPdv', 'ConfiguracaoController@alterarConfigPdv');
@@ -100,8 +106,13 @@ $route->get('pedido/produtosPorIdPedido/{idPedido}', 'PedidoController@produtosP
 $route->post('pedido/finalizarPedido', 'PedidoController@finalizarPedido');
 $route->get('pedido/obterValorTotalDosProdutos/{idPedido}', 'PedidoController@obterValorTotalDosProdutos');
 $route->post('pedido/alterarSituacaoPedido', 'PedidoController@alterarSituacaoPedido');
+$route->post('pedido/fecharPedido', 'PedidoController@fecharPedido');
+$route->post('pedido/cancelarPedido', 'PedidoController@cancelarPedido');
 
 $route->get('pedido/teste', 'PedidoController@teste');
+
+# ----- MesaController --------------------------------
+$route->get('mesa', 'MesaController@index');
 
 # ----- LogController --------------------------------
 $route->get('logs', 'LogAcessoController@index');

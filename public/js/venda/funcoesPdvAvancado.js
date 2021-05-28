@@ -31,7 +31,7 @@ function obterProdutosDaMesa() {
                 if (value.imagem == null || value.imagem == '') {
                     t += "<td><i class='fas fa-box-open' style='font-size:20px'></td>";
                 } else {
-                   t += "<td>" + '<img class="img-produto-seleionado" src="' + getDomain() + '/' + value.imagem + '">' + "</td>";
+                   t += "<td>" + '<img class="img-produto-seleionado" src="' + getDomain() + '/public' + value.imagem + '">' + "</td>";
                 }
                 t += "<td>" + value.produto + "</td>";
                 t += "<td class='hidden-when-mobile'>" + real(value.preco) + "</td>";
@@ -62,7 +62,7 @@ function obterOultimoProdutoColocadoNaMesa() {
             if (value.imagem == null || value.imagem == '') {
                 t += "<td><i class='fas fa-box-open' style='font-size:20px'></td>";
             } else {
-               t += "<td>" + '<img class="img-produto-seleionado" src="' + getDomain() + '/' + value.imagem + '">' + "</td>";
+               t += "<td>" + '<img class="img-produto-seleionado" src="' + getDomain() + '/public/' + value.imagem + '">' + "</td>";
             }
             t += "<td>" + value.produto + "</td>";
             t += "<td class='hidden-when-mobile'>" + real(value.preco) + "</td>";

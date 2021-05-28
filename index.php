@@ -31,7 +31,8 @@ System\Session\Session::start();
 
 System\Session\Token::verify();
 
-date_default_timezone_set(getenv('TIMEZONE'));
+// date_default_timezone_set(getenv('TIMEZONE'));
+date_default_timezone_set('America/Sao_Paulo');
 
 use System\Route\GetRoute;
 use System\Route\SelectController;

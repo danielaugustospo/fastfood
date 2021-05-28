@@ -37,7 +37,7 @@ class GetRouteTest extends TestCase
     {
         return [
             [false, "/public/index.php", "localhost:8000", "http://localhost:8000"],
-            [true, "/public/index.php", "tonie.com.br", "https://tonie.com.br"],
+            [true, "/public/index.php", "danieltecnologia.com", "https://danieltecnologia.com"],
             [false, "/teste/public/index.php", "localhost", "http://localhost/teste"],
             [false, "/abc/def/ghi/public/index.php", "localhost", "http://localhost/abc/def/ghi"],
         ];

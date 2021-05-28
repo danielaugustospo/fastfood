@@ -9,6 +9,7 @@ use System\Controller\Controller;
 use System\Get\Get;
 use System\Post\Post;
 use System\Session\Session;
+use App\Models\CategoriaProduto;
 
 
 ini_set('display_errors',1);
@@ -46,7 +47,10 @@ class ProdutoController extends Controller
         $produto = new Produto();
         $produtos = $produto->produtos($this->idEmpresa);
 
-        $this->view('produto/index', $this->layout, compact('produtos'));
+        $categoriaProduto = new CategoriaProduto();
+        $categoriaProdutos = $categoriaProduto->categoriaProdutos($this->idEmpresa);
+
+        $this->view('produto/index', $this->layout, compact('produtos', 'categoriaProdutos'));
     }
 
     public function save()
@@ -57,6 +61,7 @@ class ProdutoController extends Controller
 
             $dados['id_empresa'] = $this->idEmpresa;
             $dados['preco'] = formataValorMoedaParaGravacao($dados['preco']);
+
 
             if ( ! isset($dados['deleted_at'])) {
                 $dados['deleted_at'] = timestamp();
@@ -74,12 +79,13 @@ class ProdutoController extends Controller
                 } else {
                     $diretorioImagem = $this->diretorioImagemProdutoPadrao;
                 }
-
+                $diretorioImagem = 'imagem/produtos/';
                 $retornoImagem = uploadImageHelper(
                     new UploadFiles(),
                     $diretorioImagem,
                     $_FILES["imagem"]
                 );
+           
 
                 # Verifica de houve erro durante o upload de imagem
                 if (is_array($retornoImagem)) {
@@ -89,7 +95,7 @@ class ProdutoController extends Controller
 
                 $dados['imagem'] = $retornoImagem;
             }
-
+            
             try {
                 $produto->save($dados);
                 return $this->get->redirectTo("produto");
@@ -107,7 +113,7 @@ class ProdutoController extends Controller
             $dadosProduto = $produto->find($this->post->data()->id);
 
             $dados = (array)$this->post->only([
-                'nome', 'preco', 'descricao'
+                'nome', 'preco', 'descricao', 'id_categoria'
             ]);
 
             if ( ! isset($this->post->data()->deleted_at)) {
@@ -167,6 +173,10 @@ class ProdutoController extends Controller
             $produto = $produto->find($idProduto);
         }
 
-        $this->view('produto/formulario', null, compact('produto'));
+        $categoriaProduto = new CategoriaProduto();
+        $categoriaProdutos = $categoriaProduto->categoriaProdutos($this->idEmpresa);
+
+
+        $this->view('produto/formulario', null, compact('produto','categoriaProdutos'));
     }
 }

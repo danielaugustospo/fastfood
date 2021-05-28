@@ -27,6 +27,10 @@
                 <span class="badge" style="background:#98c0d5;padding:5px">
 				      <?php echo $tipo->legenda; ?> R$ <?php echo real($tipo->totalVendas); ?>
 				 </span>
+            <?php  elseif ($tipo->idMeioPagamento == 5): ?>
+                <span class="badge" style="background:#98c0d5;padding:5px">
+				      <?php echo $tipo->legenda; ?> R$ <?php echo real($tipo->totalVendas); ?>
+				 </span>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
@@ -54,7 +58,7 @@
             <tr class="group-row">
                 <td>
                     <?php if (!is_null($venda->imagem) || $venda->imagem != ''): ?>
-                        <img class="imagem-perfil" src="<?php echo BASEURL . '/' . $venda->imagem; ?>"
+                        <img class="imagem-perfil" src="<?php echo BASEURL . '/public/' . $venda->imagem; ?>"
                              alt="Imagem do perfil"
                              title="<?php echo $venda->nomeUsuario; ?>">
                     <?php else: ?>

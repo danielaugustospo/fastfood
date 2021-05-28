@@ -1,11 +1,9 @@
-<form method="post"
-      action="<?php echo isset($produto->id) ? BASEURL . '/produto/update' : BASEURL . '/produto/save'; ?>"
-      enctype='multipart/form-data'>
+<form method="post" action="<?php echo isset($produto->id) ? BASEURL . '/produto/update' : BASEURL . '/produto/save'; ?>" enctype='multipart/form-data'>
     <div class="row">
 
-        <input type="hidden" name="_token" value="<?php echo TOKEN; ?>"/>
+        <input type="hidden" name="_token" value="<?php echo TOKEN; ?>" />
 
-        <?php if (isset($produto->id)): ?>
+        <?php if (isset($produto->id)) : ?>
             <input type="hidden" name="id" value="<?php echo $produto->id; ?>">
         <?php endif; ?>
 
@@ -14,17 +12,14 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="nome">Nome *</label>
-                <input type="text" class="form-control nome" name="nome" id="nome"
-                       placeholder="Digite o nome do produto!"
-                       value="<?php echo isset($produto->id) ? $produto->nome : '' ?>">
+                <input type="text" class="form-control nome" name="nome" id="nome" placeholder="Digite o nome do produto!" value="<?php echo isset($produto->id) ? $produto->nome : '' ?>">
             </div>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="preco">R$ Preço *</label>
-                <input type="text" class="form-control campo-moeda" name="preco" id="preco" placeholder="00,00"
-                       value="<?php echo isset($produto->preco) ? real($produto->preco) : '' ?>">
+                <input type="text" class="form-control campo-moeda" name="preco" id="preco" placeholder="00,00" value="<?php echo isset($produto->preco) ? real($produto->preco) : '' ?>">
             </div>
         </div>
 
@@ -32,45 +27,53 @@
             <div class="form-group">
                 <label for="imagem">Escolher Imagem do Produto</label>
                 <input type="file" class="form-control" name="imagem" id="imagem"> <br>
-                <?php if (isset($produto->id) && ! is_null($produto->imagem)): ?>
-                    <img src="<?php echo BASEURL . '/' . $produto->imagem; ?>" class="imagem-produto">
-                <?php else: ?>
+                <?php if (isset($produto->id) && !is_null($produto->imagem)) : ?>
+                    <img src="<?php echo BASEURL . '/public/' . $produto->imagem; ?>" class="imagem-produto">
+                <?php else : ?>
                     <i class="fas fa-box-open" style="font-size:40px"></i>
                 <?php endif; ?>
             </div>
         </div>
 
         <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-sm-2" for="descricao">Categoria</label>
+                <select class="form-control col-sm-5" name="id_categoria">
+                    <?php
+
+                    foreach ($categoriaProdutos as $categoriaproduto) :
+                    if (($categoriaproduto->id) == ($produto->id_categoria)) { ?>
+                        <option value="<?php echo $categoriaproduto->id; ?>" selected><?php echo $categoriaproduto->descricao; ?></option>
+                    <?php } else { ?>
+                        <option value="<?php echo $categoriaproduto->id; ?>"><?php echo $categoriaproduto->descricao; ?></option>
+                    <?php } ?>   
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <div class="form-group">
+
+
+
                 <label for="descricao">Descrição</label>
-                <textarea class="form-control" name="descricao" id="descricao"
-                          placeholder="Deixe uma descrição do Produto!"><?php echo isset($produto->id) ? $produto->descricao : ''; ?></textarea>
+                <textarea class="form-control" name="descricao" id="descricao" placeholder="Deixe uma descrição do Produto!"><?php echo isset($produto->id) ? $produto->descricao : ''; ?></textarea>
             </div>
         </div>
 
-    </div><!--end row-->
+    </div>
+    <!--end row-->
 
     <div class="row">
         <div class="col-md-12">
             <div class="form-group" style="background:#fffcf5">
                 <label for="ativo">
                     Ativo: <small style="opacity:0.80">Mostrar produto no PDV</small>
-                    <input
-                        id="ativo"
-                        name="deleted_at"
-                        type="checkbox"
-                        class="form-control"
-                        <?php if (isset($produto->id) && is_null($produto->deleted_at)):?>
-                           checked
-                        <?php endif;?>
-                   checked>
+                    <input id="ativo" name="deleted_at" type="checkbox" class="form-control" <?php if (isset($produto->id) && is_null($produto->deleted_at)) : ?> checked <?php endif; ?> checked>
                 </label>
             </div>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-success btn-sm" style="float:right"
-            onclick="return salvarProduto()">
+    <button type="submit" class="btn btn-success btn-sm" style="float:right" onclick="return salvarProduto()">
         <i class="fas fa-save"></i> Salvar
     </button>
 </form>
@@ -79,18 +82,19 @@
     // Anula duplo click em salvar
     anulaDuploClick($('form'));
 
-    $(function () {
+    $(function() {
         jQuery('.campo-moeda')
             .maskMoney({
                 prefix: 'R$ ',
                 allowNegative: false,
-                thousands: '.', decimal: ',',
+                thousands: '.',
+                decimal: ',',
                 affixesStay: false
             });
     });
 
     $("#ativo").click(function() {
-        if ( ! $(this).is(':checked')) {
+        if (!$(this).is(':checked')) {
             modalValidacao('Validação', '<small>Ao desativar este Produto ele não será apresentado nas Vendas!</small>');
         }
     })

@@ -65,7 +65,7 @@ use System\Session\Session;
                     <td>
                         <?php if (!is_null($produto->imagem) && $produto->imagem != ''): ?>
                             <center>
-                                <?php $imagem = BASEURL . '/' . $produto->imagem; ?>
+                                <?php $imagem = BASEURL . '/public/' . $produto->imagem; ?>
                                 <img src="<?php echo $imagem; ?>" width="40"
                                     class="imagem-produto" title="Visualizar Imagem!"
                                     onclick="modalImagemDoProduto('<?php echo $imagem;?>', '<?php echo $produto->nome;?>')">
@@ -120,10 +120,12 @@ use System\Session\Session;
     </div>
 </div>
 
-<?php Modal::start([
+<?php 
+    Modal::start([
+
     'id' => 'modalFormulario',
     'width' => 'modal-lg',
-    'title' => 'Cadastrar Produtos'
+    'title' => 'Cadastro de Produto'
 ]); ?>
 
 <div id="formulario"></div>

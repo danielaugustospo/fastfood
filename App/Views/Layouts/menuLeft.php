@@ -42,7 +42,6 @@ use System\Session\Session;
             </li>
         <?php endif; ?>
 
-        <?php if (Session::get('idPerfil') != ConfigPerfil::vendedor()): ?>
 
         <li class="">
             <a href="<?php echo BASEURL; ?>/cliente"
@@ -61,6 +60,7 @@ use System\Session\Session;
                 <p>Pedidos</p>
             </a>
         </li>
+        <?php if (Session::get('idPerfil') != ConfigPerfil::vendedor()): ?>
 
             <li class="">
                 <a href="<?php echo BASEURL; ?>/relatorio/vendasPorPeriodo"

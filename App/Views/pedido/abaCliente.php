@@ -2,9 +2,10 @@
     <form>
         <div class="row">
 
-            <?php if (isset($pedido->id)) : ?>
-                <input type="hidden" name="id" value="<?php echo $pedido->id; ?>">
-            <?php endif; ?>
+            <?php  if (isset($pedido->id)) : ?>
+                <input type="text" name="id" value="<?php echo $pedido->id; ?>">
+            <?php endif; 
+            ?>
 
             <div class="col-md-4 destaque1">
                 <div class="form-group">
@@ -27,6 +28,10 @@
                 </div>
             </div><!--end-->
 
+            <?php if ($mesa > 0) { ?>
+            <input type="hidden" value="" name="id_cliente_endereco" id="id_cliente_endereco">
+            <input type="hidden" value="<?php echo $mesa; ?>" name="id_mesa" id="id_mesa">
+            <?php } else { ?>
             <div class="col-md-4 destaque1">
                 <div class="form-group">
                     <label for="id_cliente_endereco">Endereços *</label>
@@ -48,6 +53,9 @@
                     </select>
                 </div>
             </div><!--end-->
+            <input type="hidden" value="" name="id_mesa" id="id_mesa">
+
+            <?php } ?>
 
             <div class="col-md-4 destaque1">
                 <div class="form-group">
@@ -64,4 +72,5 @@
 </div>
 
 </div>
+
 </div>

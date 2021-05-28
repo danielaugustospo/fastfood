@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\CategoriaProduto;
 use App\Models\MeioPagamento;
 use App\Models\Produto;
 use App\Models\Venda;
@@ -51,10 +52,15 @@ class PdvDiferencialController extends Controller
         $produto = new Produto();
         $produtos = $produto->produtos($this->idEmpresa);
 
+
+        $categoriaProduto = new CategoriaProduto();
+        $categoriaProdutos = $categoriaProduto->categoriaprodutos($this->idEmpresa);
+
         $this->view('pdv/diferencial', $this->layout,
             compact(
                 'meiosPagamentos',
-                'produtos'
+                'produtos',
+                'categoriaProdutos'
             ));
     }
 

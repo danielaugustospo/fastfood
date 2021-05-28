@@ -227,7 +227,7 @@ if ($idPermissao != 4) { ?>
                                     <tr>
                                         <td title="<?php echo $venda->nomeUsuario; ?>">
                                             <?php if (!is_null($venda->imagem) && $venda->imagem != '') : ?>
-                                                <img class="imagem-perfil" src="<?php echo BASEURL . '/' . $venda->imagem; ?>">
+                                                <img class="imagem-perfil" src="<?php echo BASEURL . '/public/' . $venda->imagem; ?>">
                                             <?php else : ?>
                                                 <i class="fa fa-user" style="font-size:30px"></i>
                                             <?php endif; ?>
@@ -304,7 +304,7 @@ if ($idPermissao != 4) { ?>
                                     <tr>
                                         <td title="<?php echo $produto->nome; ?>">
                                             <?php if (!is_null($produto->imagem) && $produto->imagem != '') : ?>
-                                                <img class="imagem-perfil" src="<?php echo BASEURL . '/' . $produto->imagem; ?>">
+                                                <img class="imagem-perfil" src="<?php echo BASEURL . '/public/' . $produto->imagem; ?>">
                                             <?php else : ?>
                                                 <i class="fas fa-box-open" style="font-size:20px"></i>
                                             <?php endif; ?>

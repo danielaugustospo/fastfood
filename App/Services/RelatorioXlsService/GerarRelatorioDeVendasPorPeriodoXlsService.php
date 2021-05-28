@@ -44,6 +44,7 @@ class GerarRelatorioDeVendasPorPeriodoXlsService
         $dados = [];
         $dados[] = [
             'Usuário',
+            'Produto',
             'preço',
             'Quantidade',
             'Total',
@@ -55,6 +56,7 @@ class GerarRelatorioDeVendasPorPeriodoXlsService
         foreach ($vendas as $venda) {
             $dados[] = [
                 $venda->nomeUsuario,
+                $venda->nomeProduto,
                 ($venda->preco != 0) ? 'R$ ' . number_format($venda->preco, 2, ',', '.') : 'Não consta',
                 (!is_null($venda->quantidade)) ? $venda->quantidade : 'Não consta',
                 'R$ ' . number_format($venda->valor, 2, ',', '.'),
@@ -70,11 +72,15 @@ class GerarRelatorioDeVendasPorPeriodoXlsService
         # Celula Usuários
         $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);
 
+        # Celula Produtos
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(80);
+
+
         # Celula Valor
-        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 
         # Celula Tipo de Pagamento
-        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 
         # Celula Data
         $spreadsheet->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
@@ -107,7 +113,7 @@ class GerarRelatorioDeVendasPorPeriodoXlsService
             ]
         ];
 
-        $spreadsheet->getActiveSheet()->getStyle('A2:G2')->applyFromArray($header);
+        $spreadsheet->getActiveSheet()->getStyle('A2:H2')->applyFromArray($header);
         $sheet->fromArray($dados, NULL, 'A2');
 
         $streamedResponse = new StreamedResponse();

@@ -127,10 +127,14 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
                 <div class="logo-image-small">
                 </div>
             </a>
-            <img src="<?php echo BASEURL; ?>/public/imagem/logo.png">
+            <img src="<?php $caminhoLogoEmpresa = Session::get('logoEmpresa'); 
+             echo BASEURL . '/public/'. $caminhoLogoEmpresa; ?>">
             <a href="<?php echo BASEURL; ?>/pdvDiferencial" class="simple-text logo-normal">
           <span style="color:#00cc66;">&nbsp;&nbsp;&nbsp;
-            <b style="opacity:0.70">PDV SIMPLES</b>
+            <?php 
+            $tipoPlano = Session::get('plano');
+            echo '<b style="opacity:0.70">'.$tipoPlano.'</b>';
+            ?>
           </span>
                 <!--<span>Zig</span>
                 <span>Money</span>-->
@@ -160,7 +164,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
 
                         <?php $imagemPerfil = Session::get('imagem'); ?>
                         <?php if ($imagemPerfil != false): ?>
-                            <img class="perfil" src="<?php echo BASEURL . '/' . Session::get('imagem') ?>">
+                            <img class="perfil" src="<?php echo BASEURL . '/public/' . Session::get('imagem') ?>">
                         <?php else: ?>
                             <i class="fas fa-user" style="font-size:30px;"></i>
                         <?php endif; ?>
@@ -200,6 +204,12 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
                                 <?php if (Session::get('idPerfil') != ConfigPerfil::vendedor()): ?>
                                     <a class="dropdown-item" href="<?php echo BASEURL; ?>/configuracao">
                                         <i class="fas fa-cogs"></i> Configurações
+                                    </a>
+                                    <a class="dropdown-item" href="<?php echo BASEURL; ?>/categoriaproduto">
+                                        <i class="fas fa-cogs"></i> Categoria de Produtos
+                                    </a>
+                                    <a class="dropdown-item" href="<?php echo BASEURL; ?>/categoriaproduto">
+                                        <i class="fas fa-cogs"></i> Cadastro de Mesas
                                     </a>
                                 <?php endif; ?>
 
@@ -274,6 +284,8 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
             $(".collapse").toggle();
         })
     });
+
+
 </script>
 
 </body>

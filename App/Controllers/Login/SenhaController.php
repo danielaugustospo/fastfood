@@ -73,10 +73,10 @@ class SenhaController extends Controller
             $sendEmail = new SendEmail();
             $sendEmail->setFrom(getenv('MAIL_USERNAME'));
             $sendEmail->setTo($dadosUsuario->email);
-            $sendEmail->setSubject("Recuperação de senha - Tonie");
+            $sendEmail->setSubject("DANIEL TECNOLOGIA - Recuperação de senha - PDV Online");
 
             $mensagem = "Olá <b>{$dadosUsuario->nome}</b>,
-        este é um email do sistema <b>Tonie.</b><br/><br/>
+        este é um email do sistema <b>PDV Online.</b><br/><br/>
         Alguém solicitou uma recuperação de senha para este email.<br/>
         Caso não tenha sido você, simplesmente ignore esta mensagem!<br/><br/>
 

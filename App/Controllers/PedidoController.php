@@ -5,11 +5,13 @@ namespace App\Controllers;
 use App\Models\Cliente;
 use App\Models\ClienteEndereco;
 use App\Models\MeioPagamento;
+use App\Models\Mesa;
 use App\Models\Pedido;
 use App\Models\Produto;
 use App\Models\ProdutoPedido;
 use App\Models\SituacaoPedido;
 use App\Models\Usuario;
+use App\Models\Venda;
 use App\Repositories\VendasEmSessaoRepository;
 use App\Rules\Logged;
 use DateTime;
@@ -68,7 +70,9 @@ class PedidoController extends Controller
         $clienteEnderecos = $clienteEndereco->all();
 
 
-        $this->view('pedido/index', $this->layout,
+        $this->view(
+            'pedido/index',
+            $this->layout,
             compact(
                 'clientes',
                 'dates',
@@ -108,14 +112,23 @@ class PedidoController extends Controller
         $clienteEndereco = new ClienteEndereco();
         $listaEndereco = $clienteEndereco->all();
 
+        $mesa = new Mesa();
+        $mesas = $mesa->mesas($this->idEmpresa);
+
+        // var_dump($mesas);
+        // exit;
+
         $situacaoPedido = new SituacaoPedido();
         $situacoesPedidos = $situacaoPedido->all();
 
-        $this->view('pedido/tabelaDePedidos', null,
+        $this->view(
+            'pedido/tabelaDePedidos',
+            null,
             compact(
                 'pedidos',
                 'situacoesPedidos',
-                'listaEndereco'
+                'listaEndereco',
+                'mesas'
             )
         );
     }
@@ -127,18 +140,18 @@ class PedidoController extends Controller
             $produtoPedido = new ProdutoPedido();
 
             $dadosPedido = (array)$this->post->only([
-                'id_cliente', 'id_cliente_endereco'
+                'id_cliente', 'id_cliente_endereco', 'id_mesa'
             ]);
 
             $dadosPedido['id_vendedor'] = $this->idUsuarioLogado;
             $dadosPedido['id_situacao_pedido'] = 7; # 7: Incompleto
             $dadosPedido['previsao_entrega'] = '1970-01-01';
             $dadosPedido['total'] = '0';
+            $dadosPedido['id_empresa'] = $this->idEmpresa;
 
             try {
                 $pedido->save($dadosPedido);
                 echo json_encode(['status' => true, 'id_pedido' => $pedido->lastId()]);
-
             } catch (Exception $e) {
                 echo json_encode(['status' => false]);
                 dd($e->getMessage());
@@ -153,13 +166,12 @@ class PedidoController extends Controller
             $produtoPedido = new ProdutoPedido();
 
             $dadosPedido = (array)$this->post->only([
-                'id_cliente', 'id_cliente_endereco'
+                'id_cliente', 'id_cliente_endereco', 'id_mesa'
             ]);
 
             try {
                 $pedido->update($dadosPedido, $this->post->data()->id_pedido);
                 echo json_encode(['status' => true]);
-
             } catch (Exception $e) {
                 echo json_encode(['status' => false]);
                 dd($e->getMessage());
@@ -190,7 +202,6 @@ class PedidoController extends Controller
                     'status' => true,
                     'produto' => $produtoPedido->produtoPorIdProdutoPedido($produtoPedido->lastId())
                 ]);
-
             } catch (Exception $e) {
                 echo json_encode(['status' => false]);
                 dd($e->getMessage());
@@ -221,7 +232,6 @@ class PedidoController extends Controller
             try {
                 $pedido->update($dadosPedido, $idPedido);
                 echo json_encode(['status' => true]);
-
             } catch (Exception $e) {
                 echo json_encode(['status' => false]);
                 dd($e->getMessage());
@@ -237,7 +247,6 @@ class PedidoController extends Controller
         try {
             $produtoPedido->excluirProdutoPedido($idProdutoPedido);
             echo json_encode(['status' => true]);
-
         } catch (Exception $e) {
             echo json_encode(['status' => false]);
         }
@@ -254,7 +263,6 @@ class PedidoController extends Controller
             );
 
             echo json_encode(['status' => true]);
-
         } catch (Exception $e) {
             echo json_encode(['status' => false]);
         }
@@ -293,13 +301,17 @@ class PedidoController extends Controller
         if ($this->post->hasPost()) {
             $pedido = new Pedido();
 
+
+            // $idteste = $this->post->data(); 
+            // var_dump($idteste);
+            // exit;
+
             try {
                 $pedido->update(
                     ['id_situacao_pedido' => $this->post->data()->id_situacao_pedido],
                     $this->post->data()->id_pedido
                 );
                 echo json_encode(['status' => true]);
-
             } catch (Exception $e) {
                 echo json_encode(['status' => false]);
                 dd($e->getMessage());
@@ -307,7 +319,80 @@ class PedidoController extends Controller
         }
     }
 
-    public function modalFormulario($idPedido = false)
+    public function cancelarPedido(){
+        if ($this->post->hasPost()) {
+            $dadosCancelamento = $this->post->data();
+            $pedido = new Pedido();
+
+            try {
+                $pedido->update(
+                    ['id_situacao_pedido' => 2000],
+                    $dadosCancelamento->id_pedido
+                );
+                echo json_encode(['status' => true]);
+            } catch (Exception $e) {
+                echo json_encode(['status' => false]);
+                dd($e->getMessage());
+            }
+        }
+    }
+
+    public function fecharPedido()
+    {
+
+        if ($this->post->hasPost()) {
+            $dadosFechamento = $this->post->data();
+            $fecharConta = new Venda();
+            $pedido = new Pedido();
+
+            $dadosPedido = (array)$this->post->only([
+                'id_usuario',
+                'id_meio_pagamento',
+                'id_empresa',
+                'id_produto',
+                'preco',
+                'quantidade',
+                'valor'
+            ]);
+
+            $dadosPedido = [
+                'id_usuario'        => $dadosFechamento->id_usuario,
+                'id_meio_pagamento' => $dadosFechamento->id_meio_pagamento,
+                'id_empresa'        => $dadosFechamento->id_empresa,
+                'id_produto'        => $dadosFechamento->id_produto,
+                'preco'             => $dadosFechamento->preco,
+                'quantidade'        => $dadosFechamento->quantidade,
+                'valor'             => $dadosFechamento->valor
+            ];
+
+
+            // $idteste = $this->post->data(); 
+            // var_dump($idteste);
+            // exit;
+
+            try {
+                $pedido->update(
+                    ['id_situacao_pedido' => 1000],
+                    $dadosFechamento->id_pedido
+                );
+                echo json_encode(['status' => true]);
+            } catch (Exception $e) {
+                echo json_encode(['status' => false]);
+                dd($e->getMessage());
+            }
+
+
+            try {
+                $fecharConta->save($dadosPedido);
+                echo json_encode(['status' => true, 'id' => $fecharConta->lastId()]);
+            } catch (Exception $e) {
+                echo json_encode(['status' => false]);
+                dd($e->getMessage());
+            }
+        }
+    }
+
+    public function modalFormulario($mesa = false, $idPedido = false)
     {
         $pedido = false;
         $clienteEnderecos = false;
@@ -324,6 +409,8 @@ class PedidoController extends Controller
         $meioPagamento = new MeioPagamento();
         $meiosPagamentos = $meioPagamento->all();
 
+
+
         if ($idPedido) {
             $pedido = new Pedido();
             $pedido = $pedido->find($idPedido);
@@ -332,7 +419,11 @@ class PedidoController extends Controller
             $clienteEnderecos = $clienteEndereco->enderecos($pedido->id_cliente);
         }
 
-        $this->view('pedido/formulario', null,
+
+
+        $this->view(
+            'pedido/formulario',
+            null,
             compact(
                 'idPedido',
                 'pedido',
@@ -340,8 +431,10 @@ class PedidoController extends Controller
                 'clientes',
                 'produtos',
                 'meiosPagamentos',
-                'clienteEnderecos'
-            ));
+                'clienteEnderecos',
+                'mesa'
+            )
+        );
     }
 
     public function enderecoPorIdCliente($idCliente)
@@ -367,4 +460,3 @@ class PedidoController extends Controller
         }, $pedidos);
     }
 }
-

@@ -8,7 +8,41 @@ use System\Model\Model;
 class Migrate extends Model
 {
   protected $migrationPath = "/../../Database/migrations/";
-  protected $migrationsCode = [1593604775,1593605007,1593605094,1593605143,1593605239,1593605328,1593605367,1593605428,1593605466,1593605510,1593605548,1593605570,1593605592,1593605596,1593605654,1593605683,1593608384];
+  protected $migrationsCode = [
+    1593604775,
+    1593605007,
+    1593605094,
+    1593605143,
+    1593605239,
+    1593605328,
+    1593605367,
+    1593605428,
+    1593605466,
+    1593605510,
+    1593605548,
+    1593605570,
+    1593605592,
+    1593605596,
+    1593605654,
+    1593605683,
+    1593608384,
+    1593618822,
+    1593619560,
+    1593620377,
+    1595762432,
+    1605128613,
+    1605128710,
+    1609101088,
+    1609101547,
+    1609101745,
+    1609103876,
+    1610391011,
+    1610623759,
+    1610626072,
+    1610674406,
+    1636050940,
+    1636050941
+  ];
 
   public function __construct()
   {
@@ -16,7 +50,7 @@ class Migrate extends Model
     //
     try {
       $tables = $this->query("SHOW TABLES");
-    } catch(Exception $e) {
+    } catch (Exception $e) {
       echo "Algo deu errado!\n";
       dd($e->getMessage());
     }
@@ -48,7 +82,7 @@ class Migrate extends Model
     $migrationsCode = "({$migrationsCode})";
     //
     $files = glob(__DIR__ . "{$this->migrationPath}*.sql");
-    $files = array_filter($files, function ($file) use($migrationsCode) {
+    $files = array_filter($files, function ($file) use ($migrationsCode) {
       return preg_match("/(.*)\/{$migrationsCode}_(.*)/", $file) == true;
     });
     $this->migrateRun($files, false);
@@ -57,15 +91,15 @@ class Migrate extends Model
   public function migrate()
   {
     $migrations = $this->query("SELECT code FROM migrations WHERE id > 1");
-    foreach($migrations as &$migration) {
+    foreach ($migrations as &$migration) {
       $migration = $migration->code;
     }
-    $migrationsCode = implode('|',$migrations);
+    $migrationsCode = implode('|', $migrations);
     $migrationsCode = "({$migrationsCode})";
     //
     $files = glob(__DIR__ . "{$this->migrationPath}*.sql");
     array_shift($files);
-    $files = array_filter($files, function($file) use($migrationsCode) {
+    $files = array_filter($files, function ($file) use ($migrationsCode) {
       return preg_match("/(.*)\/{$migrationsCode}_(.*)/", $file) == false;
     });
     if (count($files)) {
@@ -78,18 +112,18 @@ class Migrate extends Model
 
   public function migrateRun($files, $addToMigrations = true)
   {
-    foreach($files as $file) {
+    foreach ($files as $file) {
       $data = pathinfo($file, PATHINFO_FILENAME);
       $code = explode('_', $data);
       $code = current($code);
-      $description = trim(str_replace(['_',$code], [' ',''], $data));
+      $description = trim(str_replace(['_', $code], [' ', ''], $data));
       //
       echo "- {$description} \n";
       $content = file_get_contents($file);
       $this->query($content, false);
       // se true adiciona a nova migração à tabela migrations
       if ($addToMigrations) {
-        $this->insert("INSERT INTO migrations (code, description) VALUES (?,?)", [$code,$description]);
+        $this->insert("INSERT INTO migrations (code, description) VALUES (?,?)", [$code, $description]);
       }
     }
   }
