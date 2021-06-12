@@ -91,8 +91,7 @@ if ($idPermissao == 1){ ?>
 <?php } ?>
 
 <li class="">
-            <a href="<?php echo BASEURL; ?>/login/logout"
-               >
+            <a href="<?php echo BASEURL; ?>/login/logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <p>Sair</p>
             </a>

@@ -18,14 +18,14 @@
         <div class="col-md-4 destaque1">
             <div class="form-group">
                 <label for="quantidade">Quantidade *</label>
-                <input type="text" class="form-control" name="quantidade" id="quantidade" value="1">
+                <input type="text" class="form-control quantidade" name="quantidade" id="quantidade" value="1">
             </div>
         </div>
 
         <div class="col-md-4 destaque1">
             <div class="form-group">
                 <a class="btn btn-success" style="margin-top:30px"
-                   onclick="return adicionarProduto($('#id_produto').val(), $('#quantidade'))">
+                   onclick="return adicionarProduto($('#id_produto').val(), $('.quantidade'))">
                     <i class="fas fa-plus"></i> Adicionar
                 </a>
             </div>

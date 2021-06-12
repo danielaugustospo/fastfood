@@ -128,7 +128,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
                 </div>
             </a>
             <img src="<?php $caminhoLogoEmpresa = Session::get('logoEmpresa'); 
-             echo BASEURL . '/public/'. $caminhoLogoEmpresa; ?>">
+             echo BASEURL . '/public/'. $caminhoLogoEmpresa; ?>" style="max-width: 100px !important;">
             <a href="<?php echo BASEURL; ?>/pdvDiferencial" class="simple-text logo-normal">
           <span style="color:#00cc66;">&nbsp;&nbsp;&nbsp;
             <?php 

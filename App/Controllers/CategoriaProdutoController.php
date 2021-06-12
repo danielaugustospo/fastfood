@@ -46,7 +46,7 @@ class CategoriaProdutoController extends Controller
         $categoriaProduto = new CategoriaProduto();
         $categoriaProdutos = $categoriaProduto->categoriaProdutos($this->idEmpresa);
 
-        $this->view('categoriaProduto/index', $this->layout, compact('categoriaProdutos'));
+        $this->view('categoriaproduto/index', $this->layout, compact('categoriaProdutos'));
     }
 
     public function save()
@@ -172,6 +172,6 @@ class CategoriaProdutoController extends Controller
             $categoriaProduto = $categoriaProduto->find($idCategoriaProduto);
         }
 
-        $this->view('categoriaProduto/formulario', null, compact('categoriaProduto'));
+        $this->view('categoriaproduto/formulario', null, compact('categoriaProduto'));
     }
 }

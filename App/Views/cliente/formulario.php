@@ -35,7 +35,7 @@
 
         <div class="col-md-4">
             <div class="form-group">
-                <label for="email">E-mail * <span class="label-email"></span></label>
+                <label for="email">E-mail <span class="label-email"></span></label>
                 <input type="text" class="form-control" name="email" id="email" placeholder="Digite o e-mail!"
                        value="<?php echo isset($cliente->id) ? $cliente->email : '' ?>"
                        onchange="verificaSeEmailExiste(this, <?php echo isset($cliente->id) ? $cliente->id : false; ?>)">
@@ -84,7 +84,7 @@
 
         <div class="col-md-4 elemento-quando-for-pessoa-juridica">
             <div class="form-group">
-                <label for="cnpj">CNPJ * <span class="label-cnpj"></span></label>
+                <label for="cnpj">CNPJ <span class="label-cnpj"></span></label>
                 <input type="text" class="form-control" name="cnpj" id="cnpj" placeholder="Digite o CNPJ"
                        value="<?php echo isset($cliente->id) ? $cliente->cnpj : '' ?>"
                        onchange="verificaSeCnpjExiste(this, <?php echo isset($cliente->id) ? $cliente->id : false; ?>)">
@@ -93,7 +93,7 @@
 
         <div class="col-md-4 elemento-quando-for-pessoa-fisica">
             <div class="form-group">
-                <label for="cpf">CPF * <span class="label-cpf"></span></label>
+                <label for="cpf">CPF <span class="label-cpf"></span></label>
                 <input type="text" class="form-control" name="cpf" id="cpf" placeholder="Digite o CPF"
                        value="<?php echo isset($cliente->id) ? $cliente->cpf : '' ?>"
                        onchange="verificaSeCpfExiste(this, <?php echo isset($cliente->id) ? $cliente->id : false; ?>)">
@@ -171,39 +171,42 @@
             modalValidacao('Valida√ß√£o', 'Campo (Nome) deve ser preenchido!');
             return false;
 
-        } else if ($('#email').val() == '') {
-            modalValidacao('Valida√ß√£o', 'Campo (Email) deve ser preenchido!');
-            return false;
+        } 
+               //  else if ($('#email').val() == '') {
+        //     modalValidacao('ValidaÁ„o', 'Campo (Email) deve ser preenchido!');
+        //     return false;
 
-        } else if (!emailValido($('#email').val())) {
-            modalValidacao('Valida√ß√£o', 'Digite um Email valido!');
-            return false;
+        // } else if (!emailValido($('#email').val())) {
+        //     modalValidacao('ValidaÁ„o', 'Digite um Email valido!');
+        //     return false;
+        //  }
+          else if ($('#id_cliente_tipo').val() == 'selecione') {
+             modalValidacao('ValidaÁ„o', 'Este cliente e Pessoa Fisica ou Juridica?');
+             return false;
 
-        } else if ($('#id_cliente_tipo').val() == 'selecione') {
-            modalValidacao('Valida√ß√£o', 'Este cliente √© Pessoa F√≠sica ou Jur√≠dica?');
-            return false;
+         }
+         else if ($('#id_cliente_segmento').val() == 'selecione') {
+            modalValidacao('ValidaÁ„o', 'Em qual segmento este cliente atua?');
+           return false;
 
-        } else if ($('#id_cliente_segmento').val() == 'selecione') {
-            modalValidacao('Valida√ß√£o', 'Em qual segmento este cliente atua?');
-            return false;
+         } 
+        // else if (idClienteTipo.val() == 1 && $('#cpf').val() == '') {
+        //     modalValidacao('ValidaÁ„o', 'Campo (CPF) deve ser preenchido!');
+        //     return false;
 
-        } else if (idClienteTipo.val() == 1 && $('#cpf').val() == '') {
-            modalValidacao('Valida√ß√£o', 'Campo (CPF) deve ser preenchido!');
-            return false;
+        // } else if (idClienteTipo.val() == 1 && !cpfValido($('#cpf').val())) {
+        //     modalValidacao('ValidaÁ„o', 'Digite um (CPF) valido!');
+        //     return false;
 
-        } else if (idClienteTipo.val() == 1 && !cpfValido($('#cpf').val())) {
-            modalValidacao('Valida√ß√£o', 'Digite um (CPF) valido!');
-            return false;
+        // } else if (idClienteTipo.val() == 2 && $('#cnpj').val() == '') {
+        //     modalValidacao('ValidaÁ„o', 'Campo (CNPJ) deve ser preenchido!');
+        //     return false;
 
-        } else if (idClienteTipo.val() == 2 && $('#cnpj').val() == '') {
-            modalValidacao('Valida√ß√£o', 'Campo (CNPJ) deve ser preenchido!');
-            return false;
+        // } else if (idClienteTipo.val() == 2 && !CNPJvalido($('#cnpj').val())) {
+        //     modalValidacao('ValidaÁ„o', 'Digite um (CNPJ) valido!');
+        //     return false;
 
-        } else if (idClienteTipo.val() == 2 && !CNPJvalido($('#cnpj').val())) {
-            modalValidacao('Valida√ß√£o', 'Digite um (CNPJ) valido!');
-            return false;
-
-        }
+        // }
 
         return true;
     }
