@@ -82,6 +82,28 @@ class PedidoController extends Controller
         );
     }
 
+    public function dadosCupomFiscal()
+    {
+        if ($this->post->hasPost()) {
+            // $pedido = new Pedido();
+
+            $idPedido = $this->post->data()->id_pedido;
+
+            $pedido = new Pedido();
+            $dadospedidos = $pedido->pedidos($this->idUsuarioLogado, null, null, null, null, null, $idPedido);
+            try {
+                if(isset($dadospedidos)){
+                  echo json_encode($dadospedidos);
+                }
+            } catch (Exception $e) {
+                echo json_encode(['status' => false]);
+                dd($e->getMessage());
+            }  
+
+        }
+
+    }
+
     public function tabelaDepedidosChamadosViaAjax()
     {
         if ($this->post->hasPost()) {
@@ -100,10 +122,12 @@ class PedidoController extends Controller
 
             $date = [
                 "tipo" => $this->post->data()->data_tipo ?? "",
-                "de" => $this->post->data()->de ?? date("Y-m-d"),
-                "ate" => $this->post->data()->ate ?? date("Y-m-d"),
+                "de" => $this->post->data()->de ?? date("Y-m-d  H:i"),
+                "ate" => $this->post->data()->ate ?? date("Y-m-d  H:i"),
+                // "de" => $this->post->data()->de ?? date("Y-m-d"),
+                // "ate" => $this->post->data()->ate ?? date("Y-m-d"),
             ];
-            $pedidos = $pedido->pedidos($this->idUsuarioLogado, $idCliente, $ativos, $situacaoPedido, $clienteEndereco, $date);
+            $pedidos = $pedido->pedidos($this->idUsuarioLogado, $idCliente, $ativos, $situacaoPedido, $clienteEndereco, $date, null);
         }
 
         if (!empty($pedidos)) {
@@ -145,7 +169,7 @@ class PedidoController extends Controller
 
             $dadosPedido['id_vendedor'] = $this->idUsuarioLogado;
             $dadosPedido['id_situacao_pedido'] = 7; # 7: Incompleto
-            $dadosPedido['previsao_entrega'] = '1970-01-01';
+            $dadosPedido['previsao_entrega'] = date("Y-m-d");
             $dadosPedido['total'] = '0';
             $dadosPedido['id_empresa'] = $this->idEmpresa;
 
@@ -218,15 +242,20 @@ class PedidoController extends Controller
         $dadosPedido = (array)$this->post->only([
             'id_meio_pagamento', 'valor_desconto',
             'valor_frete', 'previsao_entrega',
-            'data_compensacao'
+            'data_compensacao', 'observacao_pedido', 'valor_troco' 
         ]);
 
         $desconto = $dadosPedido['valor_desconto'] ?? 0;
-        $dadosPedido['valor_desconto'] = formataValorMoedaParaGravacao($desconto);
+        $valor_troco = $dadosPedido['valor_troco'] ?? 0;
         $frete = $dadosPedido['valor_frete'] ?? 0;
+
+
+        $dadosPedido['valor_desconto'] = formataValorMoedaParaGravacao($desconto);
+        $dadosPedido['valor_troco'] = formataValorMoedaParaGravacao($valor_troco);
         $dadosPedido['valor_frete'] = formataValorMoedaParaGravacao($frete);
         $dadosPedido['previsao_entrega'] = $dadosPedido['previsao_entrega'] ?? "0000-00-00";
         $dadosPedido['id_situacao_pedido'] = 1;
+        // $dadosPedido['observacao_pedido'] = $observacao_pedido;
 
         if ($this->post->hasPost()) {
             try {
@@ -301,10 +330,6 @@ class PedidoController extends Controller
         if ($this->post->hasPost()) {
             $pedido = new Pedido();
 
-
-            // $idteste = $this->post->data(); 
-            // var_dump($idteste);
-            // exit;
 
             try {
                 $pedido->update(
@@ -392,8 +417,9 @@ class PedidoController extends Controller
         }
     }
 
-    public function modalFormulario($mesa = false, $idPedido = false)
+    public function modalFormulario($idPedido = false, $mesa = false)
     {
+
         $pedido = false;
         $clienteEnderecos = false;
 

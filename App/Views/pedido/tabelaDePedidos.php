@@ -1,7 +1,8 @@
 <style>
-        .hideTabela {
-            display: none;
-        }
+    .hideTabela {
+        display: none;
+    }
+
     #id_situacao_pedido {
         padding: 0px !important;
         background: #faf8f3;
@@ -9,53 +10,59 @@
     }
 
     @media screen and (max-width: 600px) {
-  table {
-    border: 0;
-  }
+        table {
+            border: 0;
+        }
 
-  table caption {
-    font-size: 1.3em;
-  }
-  
-  table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-  
-  table tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: .625em;
-  }
-  
-  table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-  }
-  
-  table td::before {
-    /*
+        table caption {
+            font-size: 1.3em;
+        }
+
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        table tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: .625em;
+        }
+
+        table td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: .8em;
+            text-align: right;
+        }
+
+        table td::before {
+            /*
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
     */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  table td:last-child {
-    border-bottom: 0;
-  }
-}
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        table td:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        table tr {
+            margin-bottom: 5%;
+        }
+    }
 
     /* @media only screen and (max-width: 600px) {
         th {
@@ -65,13 +72,16 @@
         #id_situacao_pedido {
             width: 50px !important;
         } */
-
-
 </style>
-<?php $rota = BASEURL . '/pedido/modalFormulario';
-require_once('cupomFiscal.php'); ?>
+<?php
+$rota = BASEURL . '/pedido/modalFormulario';
+  require_once('cupomFiscal.php'); 
+?>
 
 
+
+
+<!-- Modal Mesas -->
 
 <div class="modal fade" id="modalMesas" tabindex="-1" role="dialog" aria-labelledby="modalMesas" aria-hidden="true">
 
@@ -118,20 +128,26 @@ require_once('cupomFiscal.php'); ?>
         </div>
     </div>
 </div>
+
+<!-- Fim Modal Mesas -->
+
+
 <?php if (count($pedidos) > 0) : ?>
     <table id="example" class="table tabela-ajustada table-striped" style="width:100%">
         <thead>
             <tr>
-                <th style="width:-webkit-fill-available;" class="hidden-when-mobile">Nº</th>
+                <th style="width:-webkit-fill-available;">Nº</th>
                 <th style="width:-webkit-fill-available;">Cliente</th>
                 <th style="width:-webkit-fill-available;">Pedido</th>
+                <th style="width:-webkit-fill-available;">Observação</th>
                 <th style="width:-webkit-fill-available;">Total</th>
+                <th style="width:-webkit-fill-available;">Troco</th>
                 <th style="width:-webkit-fill-available;">Situação</th>
                 <th style="width:-webkit-fill-available;" class="hidden-when-mobile">Mesa</th>
                 <th style="width:-webkit-fill-available;">Endereço</th>
                 <th style="width:-webkit-fill-available;">Celular</th>
-                <th style="width:-webkit-fill-available;" class="hidden-when-mobile">Entrega</th>
-                <th style="width:-webkit-fill-available;" class="hidden-when-mobile">Forma de Pagamento</th>
+                <th style="width:-webkit-fill-available;">Entrega</th>
+                <th style="width:-webkit-fill-available;">Forma de Pagamento</th>
                 <th style="width:-webkit-fill-available;" class="hideTabela">Id Meio Pagamento</th>
                 <th style="width:-webkit-fill-available;" class="hideTabela">Id Vendedor</th>
                 <th style="width:-webkit-fill-available;" class="hideTabela">Id Empresa</th>
@@ -162,34 +178,36 @@ require_once('cupomFiscal.php'); ?>
                 <tr>
                     <td data-label="N°" data-idpedido="<?php echo $pedido->idPedido; ?>" class="hidden-when-mobile"><?php echo $pedido->idPedido; ?></td>
                     <td data-label="Cliente" data-nomecliente="<?php echo $pedido->nomeCliente; ?>"><?php echo $pedido->nomeCliente; ?></td>
-                    <td data-label="Pedido" data-nomeproduto="<?php echo $pedido->nomeproduto; ?>">
-                        <?php echo $pedido->nomeproduto; ?>
+                    <td data-label="Pedido" data-nomeproduto="<?php echo "N°:" . $pedido->idPedido . ' Produto: ' . $pedido->nomeproduto; ?>">
+                        <?php echo "N°:" . $pedido->idPedido . ' Produto: ' .  $pedido->nomeproduto; ?>
                     </td>
+                    <td data-label="Observação" data-observacao="<?php echo $pedido->observacao_pedido; ?>"> <?php echo  $pedido->observacao_pedido; ?></td>
                     <td data-label="Total" data-totalgeral="<?php echo real($pedido->totalGeral); ?>">R$ <?php echo real($pedido->totalGeral); ?></td>
+                    <td data-label="Troco" data-valortroco="<?php echo real($pedido->valor_troco); ?>">R$ <?php echo real($pedido->valor_troco); ?></td>
                     <td data-label="Situação">
-                    <?php if(($pedido->id_situacao_pedido != '1000') && ($pedido->id_situacao_pedido != '2000')): ?>
-                        
-                        <select name="id_situacao_pedido" id="id_situacao_pedido" onchange="alterarSituacaoPedido(<?php echo $pedido->idPedido; ?>, $(this).val(), <?php echo $pedido->mesa; ?>)">
-                            <?php foreach ($situacoesPedidos as $situacaoPedido) : ?>
-                                <?php
+                        <?php if (($pedido->id_situacao_pedido != '1000') && ($pedido->id_situacao_pedido != '2000')) : ?>
 
-                                if (($situacaoPedido->id == $pedido->id_situacao_pedido) && ($situacaoPedido->legenda != 'Finalizado')) { ?>
-                                    <option value="<?php echo $situacaoPedido->id; ?>" selected="selected">
-                                        <?php echo $situacaoPedido->legenda; ?>
-                                    </option>
-                                <?php } elseif ($situacaoPedido->legenda != 'Finalizado') { ?>
-                                    <option value="<?php echo $situacaoPedido->id; ?>">
-                                        <?php echo $situacaoPedido->legenda; ?>
-                                    </option>
-                                <?php }  ?>
-                            <?php endforeach; ?>
-                        </select>
+                            <select name="id_situacao_pedido" id="id_situacao_pedido" onchange="alterarSituacaoPedido(<?php echo $pedido->idPedido; ?>, $(this).val(), <?php echo $pedido->mesa; ?>)">
+                                <?php foreach ($situacoesPedidos as $situacaoPedido) : ?>
+                                    <?php
 
-                    <?php 
-                        elseif ($pedido->id_situacao_pedido == '1000') : echo "Finalizado"; 
-                        elseif ($pedido->id_situacao_pedido == '2000') : echo "Cancelado"; 
+                                    if (($situacaoPedido->id == $pedido->id_situacao_pedido) && ($situacaoPedido->legenda != 'Finalizado')) { ?>
+                                        <option value="<?php echo $situacaoPedido->id; ?>" selected="selected">
+                                            <?php echo $situacaoPedido->legenda; ?>
+                                        </option>
+                                    <?php } elseif ($situacaoPedido->legenda != 'Finalizado') { ?>
+                                        <option value="<?php echo $situacaoPedido->id; ?>">
+                                            <?php echo $situacaoPedido->legenda; ?>
+                                        </option>
+                                    <?php }  ?>
+                                <?php endforeach; ?>
+                            </select>
+
+                        <?php
+                        elseif ($pedido->id_situacao_pedido == '1000') : echo "Finalizado";
+                        elseif ($pedido->id_situacao_pedido == '2000') : echo "Cancelado";
                         endif;
-                    ?>    
+                        ?>
                     </td>
                     <td data-label="Mesa" data-mesa="<?php echo $pedido->mesa; ?>" class="hidden-when-mobile">
                         <?php echo $pedido->mesa; ?>
@@ -236,14 +254,15 @@ require_once('cupomFiscal.php'); ?>
                     </td>
                     <td style="text-align:right">
 
-                    <?php if(($pedido->id_situacao_pedido != '1000') && ($pedido->id_situacao_pedido != '2000')):  //Finalizado ou Cancelado?> 
-                        <input type="button" class="fechaVenda btn btn-sm btn-success" value="Fechar Venda">
-                        <input type="button" class="cancelaVenda btn btn-sm btn-danger" value="Cancelar Venda"><br>
-                    <?php elseif($pedido->id_situacao_pedido == '1000'): ?>
-                        <input type="button" class="fechaVenda btn btn-sm btn-success" value="Venda Finalizada" disabled>
-                    <?php elseif($pedido->id_situacao_pedido == '2000'): ?>
-                        <input type="button" class="cancelaVenda btn btn-sm btn-danger" value="Venda Cancelada" disabled>
-                    <?php endif;?>
+                        <?php if (($pedido->id_situacao_pedido != '1000') && ($pedido->id_situacao_pedido != '2000')) :  //Finalizado ou Cancelado
+                        ?>
+                            <input type="button" class="fechaVenda btn btn-sm btn-success" value="Fechar Venda">
+                            <input type="button" class="cancelaVenda btn btn-sm btn-danger" value="Cancelar Venda"><br>
+                        <?php elseif ($pedido->id_situacao_pedido == '1000') : ?>
+                            <input type="button" class="fechaVenda btn btn-sm btn-success" value="Venda Finalizada" disabled>
+                        <?php elseif ($pedido->id_situacao_pedido == '2000') : ?>
+                            <input type="button" class="cancelaVenda btn btn-sm btn-danger" value="Venda Cancelada" disabled>
+                        <?php endif; ?>
                         <!-- <input type="button" class="clicador btn btn-sm btn-secondary" value="Visualizar" id="botaoModal" data-toggle="modal" data-target="#exampleModalCenter"> -->
 
                         <div class="btn-group" role="group">
@@ -252,12 +271,26 @@ require_once('cupomFiscal.php'); ?>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 23px, 0px); top: 0px; left: 0px; will-change: transform;">
 
-                                <!-- <button class="dropdown-item" href="#" onclick="modalFormularioPedido('<?php echo $rota; ?>', <?php echo $pedido->idPedido; ?>, null)">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button> -->
-                                <button class="clicador dropdown-item" id="botaoModal" data-toggle="modal" data-target="#exampleModalCenter">
+                                <?php if ($pedido->id_situacao_pedido != '1000') :  //Finalizado 
+                                ?>
+                                    <button class="dropdown-item" href="#" onclick="modalFormularioPedido('<?php echo $rota; ?>', '<?php echo $pedido->idPedido; ?>')">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                <?php endif ?>
+                                <button class="dropdown-item" data-target="#modalCupomFiscal" onclick="cupomFiscalModal('<?php echo $pedido->idPedido; ?>')">
                                     <i class="fas fa-eye"></i> Visualizar
                                 </button>
+                                
+                                <!-- Não Excluir -->
+                                    <button type="button" id="clicaModalCupom" class="btn btn-primary" data-toggle="modal" data-target="#modalCupomFiscal" style="display: none;">
+                                        Abrir Modal
+                                    </button>
+                                <!-- Não Excluir -->
+
+
+                                <!-- <button class="clicador dropdown-item" id="botaoModal" data-toggle="modal" data-target="#exampleModalCenter">
+                                    <i class="fas fa-eye"></i> Visualizar
+                                </button> -->
 
                                 <!--<a class="dropdown-item" href="#">
                               <i class="fas fa-trash-alt" style="color:#cc6666"></i> Excluir
@@ -282,3 +315,4 @@ require_once('cupomFiscal.php'); ?>
         </button>
     </center>
 <?php endif; ?>
+

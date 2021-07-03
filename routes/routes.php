@@ -110,6 +110,8 @@ $route->post('pedido/fecharPedido', 'PedidoController@fecharPedido');
 $route->post('pedido/cancelarPedido', 'PedidoController@cancelarPedido');
 
 $route->get('pedido/teste', 'PedidoController@teste');
+$route->post('pedido/cupomFiscal', 'PedidoController@dadosCupomFiscal');
+$route->get('pedido/cupomFiscal', 'PedidoController@dadosCupomFiscal');
 
 # ----- MesaController --------------------------------
 $route->get('mesa', 'MesaController@index');

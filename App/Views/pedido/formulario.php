@@ -197,12 +197,13 @@
 </div>
 
 <script>
-    $(function () {
+    $(function() {
         jQuery('.campo-moeda')
             .maskMoney({
                 prefix: 'R$ ',
                 allowNegative: false,
-                thousands: '.', decimal: ',',
+                thousands: '.',
+                decimal: ',',
                 affixesStay: false
             });
     });
@@ -229,9 +230,9 @@
     }
 
     var idPedido = false;
-    <?php if ($idPedido):?>
-    idPedido = <?php echo $idPedido;?>
-    <?php endif;?>
+    <?php if ($idPedido) : ?>
+        idPedido = <?php echo $idPedido; ?>
+    <?php endif; ?>
 
     if (!idPedido) {
         $("#button-aba-2").addClass('abaDesativada');
@@ -241,10 +242,11 @@
     }
 
     function enderecoPorIdCliente(idCliente, idClienteEnderecoPedido = false) {
+        
         var rota = getDomain() + "/pedido/enderecoPorIdCliente/" + idCliente;
         $('#id_cliente_endereco').html("<option>Carregando...</option>");
 
-        $.get(rota, function (data, status) {
+        $.get(rota, function(data, status) {
             var enderecos = JSON.parse(data);
             var options = false;
             console.log(rota);
@@ -255,11 +257,11 @@
 
                 $('#id_cliente_endereco').html("<option value='selecione'>Selecione</option>");
 
-                $.each(enderecos, function (index, value) {
+                $.each(enderecos, function(index, value) {
                     if (idClienteEnderecoPedido && idClienteEnderecoPedido == value.id) {
                         options += "<option value='" + value.id + "' selected='selected'>" + value.endereco + "</option>";
                     } else {
-                        options += "<option value='" + value.id + "'>" + value.endereco + "</option>";
+                        options += "<option value='" + value.id + "'>" + 'Endereço: '+ value.endereco + ', Número: '+ value.numero + ', Complemento: ' + value.complemento + ', Bairro: ' + value.bairro + ', Cidade: ' + value.cidade + "</option>";
                     }
                 });
 
@@ -272,11 +274,11 @@
 
     /*Salva Vendedor, Cliente e Endereço*/
     function salvarPrimeiroPasso() {
-        <?php if ($idPedido):?>
-        var rota = getDomain() + "/pedido/alterarClienteEndereco";
-        <?php else:?>
-        var rota = getDomain() + "/pedido/adicionarClienteEendereco";
-        <?php endif;?>
+        <?php if ($idPedido) : ?>
+            var rota = getDomain() + "/pedido/alterarClienteEndereco";
+        <?php else : ?>
+            var rota = getDomain() + "/pedido/adicionarClienteEendereco";
+        <?php endif; ?>
 
         if ($("#id_cliente").val() == 'selecione') {
             modalValidacao('Validação', 'Campo (Cliente) deve ser preenchido!');
@@ -295,7 +297,7 @@
             'id_mesa': $("#id_mesa").val(),
             'id_pedido': idPedido
 
-        }, function (resultado) {
+        }, function(resultado) {
             var retorno = JSON.parse(resultado);
             if (retorno.status == true) {
                 abas('aba2');
@@ -304,9 +306,9 @@
                 $("#button-aba-1").removeClass('abaActive');
                 $("#button-aba-2").addClass('abaActive');
 
-                <?php if ( !$idPedido):?>
-                idPedido = retorno.id_pedido;
-                <?php endif;?>
+                <?php if (!$idPedido) : ?>
+                    idPedido = retorno.id_pedido;
+                <?php endif; ?>
 
                 pedidos();
                 setTimeout(modalValidacaoClose, 600);
@@ -341,7 +343,7 @@
             'id_pedido': idPedido,
             'id_produto': idProduto,
             'quantidade': quantidade
-        }, function (resultado) {
+        }, function(resultado) {
             var retorno = JSON.parse(resultado);
             var produto = retorno.produto[0];
             montaTabelaDeProdutos(produto);
@@ -372,10 +374,10 @@
         var rota = getDomain() + "/pedido/excluirProdutoPedido/" + idProdutoPedido;
 
         modalValidacao('Validação', 'Aguarde...');
-        $.get(rota, function (resultado) {
+        $.get(rota, function(resultado) {
             var retorno = JSON.parse(resultado);
             if (retorno.status == true) {
-                elemento.parent().parent().fadeOut(400, function () {
+                elemento.parent().parent().fadeOut(400, function() {
                     $(this).remove();
                 })
 
@@ -398,7 +400,7 @@
                 '_token': '<?php echo TOKEN; ?>',
                 'idProdutoPedido': idProdutoPerdido,
                 'quantidade': quantidade
-            }, function (resultado) {
+            }, function(resultado) {
                 var retorno = JSON.parse(resultado);
                 if (retorno.status == true) {
                     carregaProdutosPedidos(idPedido);
@@ -421,13 +423,13 @@
         $('<center><span class="tabela-load">Carregando...</span></center>').insertAfter('.tabela-de-produto');
         $(".tabela-de-produto tbody").empty();
 
-        $.get(rota, function (resultado) {
+        $.get(rota, function(resultado) {
             var produtos = JSON.parse(resultado);
             var t = "";
 
             $(".tabela-load").hide();
 
-            $.each(produtos, function (index, produto) {
+            $.each(produtos, function(index, produto) {
                 montaTabelaDeProdutos(produto);
             });
         });
@@ -454,9 +456,9 @@
         elmDataCompensacao.disabled = true;
     }
 
-    <?php if ($idPedido):?>
-    carregaProdutosPedidos("<?php echo $idPedido;?>");
-    <?php endif;?>
+    <?php if ($idPedido) : ?>
+        carregaProdutosPedidos("<?php echo $idPedido; ?>");
+    <?php endif; ?>
 
     function finalizarPedido() {
         var rota = getDomain() + "/pedido/finalizarPedido";
@@ -473,6 +475,7 @@
             return false;
         }
 
+
         modalValidacao('Validação', 'Aguarde...');
 
         $.post(rota, {
@@ -482,8 +485,10 @@
             'data_compensacao': $("#data_compensacao").val(),
             'valor_desconto': $("#valor_desconto").val(),
             'valor_frete': $("#valor_frete").val(),
+            'observacao_pedido': $("#observacao_pedido").val(),
+            'valor_troco': $("#valor_troco").val(),
             'previsao_entrega': $("#previsao_entrega").val()
-        }, function (resultado) {
+        }, function(resultado) {
             try {
                 var retorno = JSON.parse(resultado);
                 if (retorno.status == true) {
@@ -503,11 +508,14 @@
     function obterValorTotalDopedido(idPedido) {
         var rota = getDomain() + "/pedido/obterValorTotalDosProdutos/" + idPedido;
         $(".total-geral-produtos").html("<b>Total:</b> <small>Carregando...</small>");
-        $.get(rota, function (resultado) {
+        $.get(rota, function(resultado) {
             var retorno = JSON.parse(resultado);
 
             $(".total-geral-produtos").empty();
             $(".total-geral-produtos").html("<b>Total:</b> " + real(retorno.totalGeral));
         });
     }
+//   jQuery('#id_cliente_endereco').select2();
+      jQuery('#id_cliente').select2();
+      jQuery('#id_produto').select2();
 </script>

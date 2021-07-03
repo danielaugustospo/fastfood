@@ -4,9 +4,9 @@
         <div class="col-md-4 destaque1">
             <div class="form-group">
                 <label for="id_produto">Produtos *</label>
-                <select class="form-control" name="id_produto" id="id_produto">
+                <select class="form-control" name="id_produto" id="id_produto" style="width: 200px !important;">
                     <option value="selecione">Selecione</option>
-                    <?php foreach ($produtos as $produto): ?>
+                    <?php foreach ($produtos as $produto) : ?>
                         <option value="<?php echo $produto->id; ?>">
                             <?php echo $produto->nome; ?>
                         </option>
@@ -24,8 +24,7 @@
 
         <div class="col-md-4 destaque1">
             <div class="form-group">
-                <a class="btn btn-success" style="margin-top:30px"
-                   onclick="return adicionarProduto($('#id_produto').val(), $('.quantidade'))">
+                <a class="btn btn-success" style="margin-top:30px" onclick="return adicionarProduto($('#id_produto').val(), $('.quantidade'))">
                     <i class="fas fa-plus"></i> Adicionar
                 </a>
             </div>
@@ -36,13 +35,13 @@
         <div class="col-md-12 table-produtos">
             <table class="table table tabela-ajustada tabela-de-produto table-striped">
                 <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Produto</th>
-                    <th>Qtd</th>
-                    <th>Total</th>
-                    <th>Ação</th>
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Produto</th>
+                        <th>Qtd</th>
+                        <th>Total</th>
+                        <th>Ação</th>
+                    </tr>
                 </thead>
                 <tbody>
 
@@ -51,11 +50,10 @@
         </div>
 
         <div class="col-md-12" style="float:right!important">
-      <span class="total-geral-produtos" style="float:right!important" class="pull-right">
-        <b>Total:</b> R$ 00,00
-      </span>
+            <span class="total-geral-produtos" style="float:right!important" class="pull-right">
+                <b>Total:</b> R$ 00,00
+            </span>
         </div>
 
     </div>
 </div>
-

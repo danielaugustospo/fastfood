@@ -93,7 +93,8 @@ INSERT INTO `migrations` (`id`, `code`, `description`, `created_at`, `updated_at
 (31,'1610674406', 'created at em vendas', '2020-07-01 12:33:40', NULL),
 (32,'1636050940', 'cria tabela de categoria de produtos', '2020-07-01 12:33:40', NULL),
 (33,'1636050941', 'cria tabela de mesas', '2020-07-01 12:33:40', NULL);
-
+(34,'1625073337', 'adiciona observacao valorpago em pedidos', '2020-07-01 12:33:40', NULL);
+(35,'1625070286', 'cria tabela de planos', '2020-07-01 12:33:40', NULL);
 
 
 

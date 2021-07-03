@@ -269,7 +269,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
 <script src="<?php echo BASEURL; ?>/public/js/mask.js"></script>
 <script src="<?php echo BASEURL; ?>/public/assets/js/paper-dashboard.min.js"></script>
 <script src="<?php echo BASEURL; ?>/public/js/select2.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(function () {
         jQuery('.campo-moeda')

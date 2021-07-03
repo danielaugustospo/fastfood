@@ -2,23 +2,24 @@
     <form>
         <div class="row">
 
-            <?php  if (isset($pedido->id)) : ?>
-                <input type="text" name="id" value="<?php echo $pedido->id; ?>">
-            <?php endif; 
+            <?php
+
+            if (isset($pedido->id)) : ?>
+                <input type="hidden" name="id" value="<?php echo $pedido->id; ?>">
+            <?php endif;
             ?>
 
-            <div class="col-md-4 destaque1">
+            <div class="col-md-12 destaque1">
                 <div class="form-group">
                     <label for="id_cliente">Clientes *</label>
-                    <select class="form-control" name="id_cliente" id="id_cliente"
-                            onchange="enderecoPorIdCliente(this.value);">
+                    <select class="form-control" name="id_cliente" id="id_cliente" onchange="enderecoPorIdCliente(this.value);" style="width: -webkit-fill-available !important;">
                         <option value="selecione">Selecione</option>
-                        <?php foreach ($clientes as $cliente): ?>
-                            <?php if ($cliente->id == $pedido->id_cliente): ?>
+                        <?php foreach ($clientes as $cliente) : ?>
+                            <?php if ($cliente->id == $pedido->id_cliente) : ?>
                                 <option value="<?php echo $cliente->id; ?>" selected="selected">
                                     <?php echo $cliente->nome; ?>
                                 </option>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <option value="<?php echo $cliente->id; ?>">
                                     <?php echo $cliente->nome; ?>
                                 </option>
@@ -26,51 +27,50 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-            </div><!--end-->
-
+            </div>
+            <!--end-->
             <?php if ($mesa > 0) { ?>
-            <input type="hidden" value="" name="id_cliente_endereco" id="id_cliente_endereco">
-            <input type="hidden" value="<?php echo $mesa; ?>" name="id_mesa" id="id_mesa">
+                <input type="hidden" value="" name="id_cliente_endereco" id="id_cliente_endereco">
+                <input type="hidden" value="<?php echo $mesa; ?>" name="id_mesa" id="id_mesa">
             <?php } else { ?>
-            <div class="col-md-4 destaque1">
-                <div class="form-group">
-                    <label for="id_cliente_endereco">Endereços *</label>
-                    <select class="form-control" name="id_cliente_endereco" id="id_cliente_endereco">
-                        <option value="selecione">Selecione</option>
-                        <?php if ($idPedido): ?>
-                            <?php foreach ($clienteEnderecos as $endereco): ?>
-                                <?php if ($pedido->id_cliente_endereco == $endereco->id): ?>
-                                    <option value="<?php echo $endereco->id; ?>" selected="selected">
-                                        <?php echo $endereco->endereco; ?>
-                                    </option>
-                                <?php else: ?>
-                                    <option value="<?php echo $endereco->id; ?>">
-                                        <?php echo $endereco->endereco; ?>
-                                    </option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </select>
+                <div class="col-md-8 destaque1">
+                    <div class="form-group">
+                        <label for="id_cliente_endereco">Endereços *</label>
+                        <select class="form-control" name="id_cliente_endereco" id="id_cliente_endereco">
+                            <option value="selecione">Selecione</option>
+                            <?php if ($idPedido) : ?>
+                                <?php foreach ($clienteEnderecos as $endereco) : ?>
+                                    <?php if ($pedido->id_cliente_endereco == $endereco->id) : ?>
+                                        <option value="<?php echo $endereco->id; ?>" selected="selected">
+                                            <?php echo "Endereço: " . $endereco->endereco . ", Número: " . $endereco->numero . ", Complemento: " . $endereco->complemento . ", Bairro: " . $endereco->bairro . ", Cidade: " . $endereco->cidade; ?>
+                                        </option>
+                                    <?php else : ?>
+                                        <option value="<?php echo $endereco->id; ?>">
+                                        <?php echo "Endereço: " . $endereco->endereco . ", Número: " . $endereco->numero . ", Complemento: " . $endereco->complemento . ", Bairro: " . $endereco->bairro . ", Cidade: " . $endereco->cidade; ?>
+                                        </option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
                 </div>
-            </div><!--end-->
-            <input type="hidden" value="" name="id_mesa" id="id_mesa">
+                <!--end-->
+                <input type="hidden" value="" name="id_mesa" id="id_mesa">
 
             <?php } ?>
 
             <div class="col-md-4 destaque1">
                 <div class="form-group">
-                    <a class="btn btn-success" style="margin-top:28px"
-                       onclick="return salvarPrimeiroPasso()" id="salvar-endereco">
+                    <a class="btn btn-success" style="margin-top:28px" onclick="return salvarPrimeiroPasso()" id="salvar-endereco">
                         <i class="fas fa-save"></i> Salvar
                     </a>
                 </div>
-            </div><!--end-->
+            </div>
+            <!--end-->
 
     </form>
 
 
 </div>
-
 </div>
-
 </div>

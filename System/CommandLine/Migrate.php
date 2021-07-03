@@ -41,7 +41,9 @@ class Migrate extends Model
     1610626072,
     1610674406,
     1636050940,
-    1636050941
+    1636050941,
+    1625073337,
+    1625070286
   ];
 
   public function __construct()

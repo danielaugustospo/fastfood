@@ -84,7 +84,7 @@ class PdvDiferencialController extends Controller
                 'id_usuario' => $this->idUsuario,
                 'id_meio_pagamento' => $meioDePagamento,
                 // 'data_compensacao' => $dataCompensacao,
-                'data_compensacao' => '1970-01-01',
+                'data_compensacao' => $produto['data_compensacao'],
                 'id_empresa' => $this->idEmpresa,
                 'id_produto' => $produto['id'],
                 'preco' => $produto['preco'],
