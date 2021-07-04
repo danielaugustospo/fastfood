@@ -291,17 +291,17 @@ use System\HtmlComponents\Modal\Modal; ?>
                 '</th>' +
                 '</tr>' +
                 '<tr>' +
-                '<th class="thTracado" colspan="3" id="previsaoEntrega"></th>' +
+                '<th class="thTracado" colspan="5" id="previsaoEntrega"></th>' +
                 '</tr>' +
                 '<tr>' +
-                '<th class="thTracado" colspan="3">' +
+                '<th class="thTracado" colspan="5">' +
                 '<b>CLIENTE: <label style="color: black;" id="cliente"></label> <label style="color: black;" id="mesa"> </label></b>' +
                 '<br><b>TELEFONE: <label style="color: black;" id="celular"></label></b><br />' +
                 '<b>ENDEREÇO: <label style="color: black;" id="endereco"></label></b>' +
                 '</th>' +
                 '</tr>'+
                 '<tr>' +
-                '<th class="ttu thTracado" colspan="3">' +
+                '<th class="ttu thTracado" colspan="5">' +
                 '<b>Cupom não fiscal</b>' +
                 '<hr>' +
                 '</th>' +
@@ -313,7 +313,7 @@ use System\HtmlComponents\Modal\Modal; ?>
                 '<tr class="ttu">' +
                 '<td colspan="1"><b>PRODUTO </b></td>' +
                 '<td colspan="1"><b>PREÇO </b></td>' +
-                '<td colspan="1"><b>QTD.</b></td>' +
+                '<td colspan="1" style="width: 2vh;"><b>QTD.</b></td>' +
                 '<td colspan="1"><b>SUBTOTAL </b></td>' +
                 '</tr>' +
                 '<tr class="ttu">' +

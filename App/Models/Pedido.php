@@ -58,13 +58,13 @@ class Pedido extends Model
             situacao.legenda AS situacao,
             pagamento.legenda AS forma_pagamento,
   
-            (SELECT SUM(subtotal) FROM produtos_pedidos
+            FORMAT((SELECT SUM(subtotal) FROM produtos_pedidos
               WHERE produtos_pedidos.id_pedido = pedidos.id
-            ) + FORMAT(pedidos.valor_frete - pedidos.valor_desconto,2) AS totalGeral,
+            ) + pedidos.valor_frete - pedidos.valor_desconto,2) AS totalGeral,
 
-            (SELECT SUM(subtotal) FROM produtos_pedidos
+            FORMAT((SELECT SUM(subtotal) FROM produtos_pedidos
               WHERE produtos_pedidos.id_pedido = pedidos.id
-            ) + FORMAT( pedidos.valor_troco + pedidos.valor_frete - pedidos.valor_desconto,2) AS totalpago
+            ) +  pedidos.valor_troco + pedidos.valor_frete - pedidos.valor_desconto,2) AS totalpago
 
   
             FROM pedidos INNER JOIN clientes ON pedidos.id_cliente = clientes.id
