@@ -13,7 +13,7 @@
 
         <div class="col-md-4">
             <div class="form-group">
-                <label for="imagem">Escolher Imagem da Categoria</label>
+                <label for="foto">Escolher Imagem da Categoria</label>
                 <input type="file" class="form-control" name="foto" id="foto"> <br>
                 <?php if (isset($categoriaProduto->id) && !is_null($categoriaProduto->foto)) : ?>
                     <img src="<?php echo BASEURL . '/public/' . $categoriaProduto->foto; ?>" class="imagem-produto">

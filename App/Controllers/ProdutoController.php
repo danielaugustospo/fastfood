@@ -138,6 +138,7 @@ class ProdutoController extends Controller
                 } else {
                     $diretorioImagem = $this->diretorioImagemProdutoPadrao;
                 }
+                $diretorioImagem = 'imagem/produtos/';
 
                 $retornoImagem = uploadImageHelper(
                     new UploadFiles(),

@@ -54,7 +54,6 @@ class UsuarioController extends Controller
             $this->idUsuarioLogado,
             $this->idPerfilUsuarioLogado
         );
-// var_dump($usuarios);
         $this->view('usuario/index', $this->layout, compact('usuarios'));
     }
 
@@ -74,6 +73,7 @@ class UsuarioController extends Controller
                 } else {
                     $diretorioImagem = $this->diretorioImagemUsuarioPadrao;
                 }
+                $diretorioImagem = 'imagem/perfil_usuarios/';
 
                 $retornoImagem = uploadImageHelper(
                     new UploadFiles(),
@@ -125,6 +125,7 @@ class UsuarioController extends Controller
                 } else {
                     $diretorioImagem = $this->diretorioImagemUsuarioPadrao;
                 }
+                $diretorioImagem = 'imagem/perfil_usuarios/';
 
                 $retornoImagem = uploadImageHelper(
                     new UploadFiles(),

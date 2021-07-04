@@ -123,11 +123,11 @@ class CategoriaProdutoController extends Controller
 
             // $dados['preco'] = formataValorMoedaParaGravacao($dados['preco']);
 
-            if (!empty($_FILES["imagem"]['name'])) {
+            if (!empty($_FILES["foto"]['name'])) {
 
-                if (file_exists($dadosCategoriaProduto->imagem)) {
+                if (file_exists($dadosCategoriaProduto->foto)) {
                     # Deleta a imagem anterior
-                    unlink($dadosCategoriaProduto->imagem);
+                    unlink($dadosCategoriaProduto->foto);
                 }
 
                 $diretorioImagem = false;
@@ -141,7 +141,7 @@ class CategoriaProdutoController extends Controller
                 $retornoImagem = uploadImageHelper(
                     new UploadFiles(),
                     $diretorioImagem,
-                    $_FILES["imagem"]
+                    $_FILES["foto"]
                 );
 
                 # Verifica de houve erro durante o upload de imagem
@@ -150,7 +150,7 @@ class CategoriaProdutoController extends Controller
                     return $this->get->redirectTo("categoriaproduto");
                 }
 
-                $dados['imagem'] = $retornoImagem;
+                $dados['foto'] = $retornoImagem;
             }
 
             try {
