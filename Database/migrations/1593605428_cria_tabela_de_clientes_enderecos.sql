@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `clientes_enderecos` (
   `bairro` varchar(50) NOT NULL,
   `cidade` varchar(50) DEFAULT NULL,
   `estado` varchar(50) DEFAULT NULL,
-  `numero` int(11) DEFAULT NULL,
+  `numero` varchar(50) DEFAULT NULL,
   `complemento` text,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,

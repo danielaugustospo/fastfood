@@ -50,7 +50,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="numero">Número *</label>
-                <input type="text" class="form-control" name="numero" id="numero" placeholder="Exemplo: 14-E"
+                <input type="text" class="form-control" name="numero" id="numero" placeholder="Ex:14"
                        value="<?php echo isset($clienteEndereco->id) ? $clienteEndereco->numero : '' ?>">
             </div>
         </div>
