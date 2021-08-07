@@ -369,53 +369,47 @@ class PedidoController extends Controller
             $dadosFechamento = $this->post->data();
             $fecharConta = new Venda();
             $pedido = new Pedido();
+            
+            $consultaPedido   = $pedido->pedidos($this->idUsuarioLogado, null, null, null, null, null, $dadosFechamento->id_pedido);
 
-            $dadosPedido = (array)$this->post->only([
-                'id_usuario',
-                'id_meio_pagamento',
-                'id_empresa',
-                'id_produto',
-                'preco',
-                'quantidade',
-                'valor'
-            ]);
+            foreach ($consultaPedido as $key => $resultadoConsultaPedidos) {
 
-            $dadosPedido = [
-                'id_usuario'        => $dadosFechamento->id_usuario,
-                'id_meio_pagamento' => $dadosFechamento->id_meio_pagamento,
-                'id_empresa'        => $dadosFechamento->id_empresa,
-                'id_produto'        => $dadosFechamento->id_produto,
-                'preco'             => $dadosFechamento->preco,
-                'quantidade'        => $dadosFechamento->quantidade,
-                'valor'             => $dadosFechamento->valor
-            ];
-
-
-            // $idteste = $this->post->data(); 
-            // var_dump($idteste);
-            // exit;
-
-            try {
-                $pedido->update(
-                    ['id_situacao_pedido' => 1000],
-                    $dadosFechamento->id_pedido
-                );
-                echo json_encode(['status' => true]);
-            } catch (Exception $e) {
-                echo json_encode(['status' => false]);
-                dd($e->getMessage());
-            }
-
-
-            try {
-                $fecharConta->save($dadosPedido);
-                echo json_encode(['status' => true, 'id' => $fecharConta->lastId()]);
-            } catch (Exception $e) {
-                echo json_encode(['status' => false]);
-                dd($e->getMessage());
-            }
+                $dadosPedido = [
+                    'id_usuario'        => $resultadoConsultaPedidos->id_vendedor,  
+                    'id_meio_pagamento' => $resultadoConsultaPedidos->id_meio_pagamento,  
+                    'id_empresa'        => $resultadoConsultaPedidos->id_empresa,  
+                    'id_pedido'        => $resultadoConsultaPedidos->idPedido,  
+                    'id_produto'        => $resultadoConsultaPedidos->id_produto,  
+                    'preco'             => $resultadoConsultaPedidos->preco,  
+                    'quantidade'        => $resultadoConsultaPedidos->quantidade,  
+                    'valor'             => $resultadoConsultaPedidos->subtotal  
+                ];
+    
+                try {
+                    $fecharConta->save($dadosPedido);
+                    echo json_encode(['status' => true, 'id' => $fecharConta->lastId()]);
+                    $pedidoFechado = 1;
+                } catch (Exception $e) {
+                    echo json_encode(['status' => false]);
+                    dd($e->getMessage());
+                    $pedidoFechado = 0;
+                }
+            } 
+            if ($pedidoFechado == 1){
+                try {
+                    $pedido->update(
+                        ['id_situacao_pedido' => 1000],
+                        $dadosFechamento->id_pedido
+                    );
+                    echo json_encode(['status' => true]);
+                } catch (Exception $e) {
+                    echo json_encode(['status' => false]);
+                    dd($e->getMessage());
+                }
+            }       
         }
     }
+
 
     public function modalFormulario($idPedido = false, $mesa = false)
     {

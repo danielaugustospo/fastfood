@@ -17,8 +17,8 @@
 
         <div class="col-md-4 destaque1">
             <div class="form-group">
-                <label for="quantidade">Quantidade *</label>
-                <input type="text" class="form-control quantidade" name="quantidade" id="quantidade" value="1">
+                <!-- <label for="quantidade">Quantidade *</label> -->
+                <input type="hidden" class="form-control quantidade" name="quantidade" id="quantidade" value="1">
             </div>
         </div>
 

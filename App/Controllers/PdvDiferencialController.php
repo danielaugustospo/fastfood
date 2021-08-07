@@ -80,6 +80,10 @@ class PdvDiferencialController extends Controller
             //     $dataCompensacao = $this->post->data()->data_compensacao;
             // }
 
+            if ($meioDePagamento != 4) {
+                $produto['data_compensacao'] = '2030-01-01';
+            }
+
             $dados = [
                 'id_usuario' => $this->idUsuario,
                 'id_meio_pagamento' => $meioDePagamento,

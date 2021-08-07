@@ -172,7 +172,7 @@ function saveVendasViaSession(token) {
         })
     })
     .finally(function () {
-        setTimeout(modalValidacaoClose, 1000);
+        setTimeout(modalValidacaoClose, 12000);
     })
 }
 

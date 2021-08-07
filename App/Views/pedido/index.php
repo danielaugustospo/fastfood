@@ -84,6 +84,7 @@ use System\HtmlComponents\Modal\Modal; ?>
     <div class="card col-lg-12 content-div">
         <div class="card-body">
             <h5 class="card-title"><i class="fas fa-shopping-basket"></i> Pedidos</h5>
+
         </div>
         <div id="append-pedidos"></div>
         <br>
@@ -313,13 +314,13 @@ use System\HtmlComponents\Modal\Modal; ?>
                 '<tr class="ttu">' +
                 '<td colspan="1"><b>PRODUTO </b></td>' +
                 '<td colspan="1"><b>PREÇO </b></td>' +
-                '<td colspan="1" style="width: 2vh;"><b>QTD.</b></td>' +
+                '<td colspan="1" style="width: 2vh; padding-left:10px;"><b>QTD.</b></td>' +
                 '<td colspan="1"><b>SUBTOTAL </b></td>' +
                 '</tr>' +
                 '<tr class="ttu">' +
                 '<td colspan="1" class="pr-1"><b id="nomeproduto"></b></td>' +
                 '<td colspan="1"><b id="preco"></b></td>' +
-                '<td colspan="1"><b id="quantidade"></b></td>' +
+                '<td colspan="1" style="padding-left:20px;"><b id="quantidade"></b></td>' +
                 '<td colspan="1"><b id="subtotal"></b></td>' +
                 '</tr>' +
                 '</tbody>' +

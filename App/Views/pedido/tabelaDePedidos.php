@@ -79,7 +79,10 @@ $rota = BASEURL . '/pedido/modalFormulario';
 ?>
 
 
-
+<button style="width:-webkit-fill-available;" onclick="modalFormularioPedido('<?php echo $rota; ?>', null);" class="btn btn-sm btn-success" title="Delivery">
+                        Delivery
+                        <i class="fa fa-motorcycle" aria-hidden="true"></i>
+                    </button>
 
 <!-- Modal Mesas -->
 
